@@ -4,13 +4,17 @@ const cookie_parser = require('cookie-parser');
 require('dotenv').config();
 
 // 내부 모듈
-const models = require('./models');
+const router = require('./routes/index.js');
+const models = require('./models/index.js');
 
 const env = process.env;
 const app = express();
 
+// GET /api/users
+
 app.use(express.json());
 app.use(cookie_parser());
+app.use('/api', router);
 
 app.get('/', (req, res) => {
   res.send('어서오세요');
