@@ -4,13 +4,11 @@ const cookie_parser = require('cookie-parser');
 require('dotenv').config();
 
 // 내부 모듈
-const router = require('./routes/index.js');
-const models = require('./models/index.js');
+const router = require('./routes/index');
+const models = require('./models/index');
 
 const env = process.env;
 const app = express();
-
-// GET /api/users
 
 app.use(express.json());
 app.use(cookie_parser());

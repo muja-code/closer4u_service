@@ -1,4 +1,4 @@
-const UserRepository = require('../../repositories/users/users.js');
+const UserRepository = require('../../repositories/users/users');
 const { User } = require('../../models');
 class UserService {
   userRepository = new UserRepository(User);
@@ -7,9 +7,14 @@ class UserService {
     try {
       const user = await this.userRepository.findUser(userId);
 
+      if (user === 0) {
+        throw error;
+      }
+
       return user;
     } catch (error) {
-      return error;
+      console.log(error);
+      return 0;
     }
   };
 }

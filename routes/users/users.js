@@ -1,11 +1,11 @@
 const express = require('express');
 
-const UsersController = require('../../controllers/users/users.js');
+const UsersController = require('../../controllers/users/users');
 
 const router = express.Router();
 const usersController = new UsersController();
 
-// GET /api/users
+// GET
 router.get('/', usersController.getUser);
 
 module.exports = router;

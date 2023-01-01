@@ -1,4 +1,4 @@
-const UserService = require('../../services/users/users.js');
+const UserService = require('../../services/users/users');
 
 class UsersController {
   userService = new UserService();
@@ -8,6 +8,10 @@ class UsersController {
       const userId = 1;
 
       const user = await this.userService.findUser(userId);
+
+      if (user === 0) {
+        throw error;
+      }
 
       res.status(200).json({ data: user });
     } catch (error) {
