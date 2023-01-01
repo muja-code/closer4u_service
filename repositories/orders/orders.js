@@ -22,9 +22,8 @@ class OrdersRepository {
       });
 
       return orders;
-    } catch (error) {
-      console.log(error);
-      return 0;
+    } catch {
+      return 400;
     }
   };
 
@@ -50,9 +49,20 @@ class OrdersRepository {
       });
 
       return orders;
-    } catch (error) {
-      console.log(error);
-      return 0;
+    } catch {
+      return 400;
+    }
+  };
+
+  getOrder = async (order_id) => {
+    try {
+      const order = await this.orderModel.findOne({
+        where: { id: order_id },
+      });
+
+      return order;
+    } catch {
+      return 400;
     }
   };
 
@@ -62,11 +72,8 @@ class OrdersRepository {
         { status },
         { where: { id: order_id } }
       );
-
-      return order;
-    } catch (error) {
-      console.log(error);
-      return 0;
+    } catch {
+      return 400;
     }
   };
 }

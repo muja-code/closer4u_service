@@ -7,14 +7,13 @@ class UserService {
     try {
       const user = await this.userRepository.findUser(userId);
 
-      if (user === 0) {
-        throw error;
+      if (user === 400) {
+        throw 400;
       }
 
       return user;
     } catch (error) {
-      console.log(error);
-      return 0;
+      return error;
     }
   };
 }
