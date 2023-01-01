@@ -27,6 +27,10 @@ models.sequelize
     console.log(err);
   });
 
+const orders = require('./routes/orders/orders.js');
+
+app.use('/api', [orders]);
+
 app.listen(env.PORT, () => {
   console.log(env.PORT, '번 포트가 실행되었습니다.');
 });

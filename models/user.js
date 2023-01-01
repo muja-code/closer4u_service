@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       point: {
         type: DataTypes.INTEGER,
       },
+      member: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,

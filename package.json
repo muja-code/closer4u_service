@@ -1,7 +1,6 @@
 {
   "name": "closer4u_service",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js"
@@ -20,5 +19,14 @@
   "devDependencies": {
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.5.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/H-JJOO/closer4u_service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/H-JJOO/closer4u_service/issues"
+  },
+  "homepage": "https://github.com/H-JJOO/closer4u_service#readme",
+  "description": ""
 }
