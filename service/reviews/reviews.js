@@ -16,7 +16,7 @@ class ReivewsService {
         throw 400;
       }
 
-      // 로그인 쿠키 없을 경우 throw 403
+      // 로그인 쿠키가 없을 경우 throw 403
 
       // 데이터 가공
       return {

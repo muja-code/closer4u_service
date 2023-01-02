@@ -3,6 +3,7 @@ class ReivewsRepository {
     this.reivewsModel = reivewsModel;
   }
 
+  // 리뷰 작성
   createReivew = async (mark, comment) => {
     try {
       // sequelize 에서 Reivews 모델의 create 메소드를 사용해 데이터 요청
