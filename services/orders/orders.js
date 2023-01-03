@@ -24,9 +24,9 @@ class OrdersService {
     }
   };
 
-  getOrders = async (user_id) => {
+  getOrders = async (userId) => {
     try {
-      const orders = await this.ordersRepository.getOrders(user_id);
+      const orders = await this.ordersRepository.getOrders(userId);
 
       if (!orders) {
         throw new Error('Order Error');
@@ -50,7 +50,6 @@ class OrdersService {
       if (!order) {
         throw new Error('Order Error');
       }
-
       await this.ordersRepository.acceptRequest(userId, orderId);
       return true;
     } catch (error) {
@@ -58,7 +57,6 @@ class OrdersService {
       return error;
     }
   };
-
   changeStatus = async (orderId) => {
     try {
       const order = await this.ordersRepository.getOrder(orderId);

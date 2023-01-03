@@ -9,12 +9,13 @@ class UsersController {
       const user = await this.userService.findUser(userId);
 
       if (typeof user.message !== 'undefined') {
-        res.status(400).json({ errorMessage: user.message });
+        return res.status(400).json({ errorMessage: user.message });
       }
 
-      res.status(200).render('mypage', {
-        data: user,
-      });
+      res.status(200).json({ data: user });
+      // res.status(200).render('mypage', {
+      //   data: user,
+      // });
     } catch (error) {
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
