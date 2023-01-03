@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="">
+      <h1>가까운4이 세탁서비스</h1>
+    </div>
+
+    <div class="buttons">
+      <button><a href="">주문신청</a></button>
+      <button><a href="">주문내역</a></button>
+      <button><a href="">로그인</a></button>
+      <button><a href="">회원가입</a></button>
+      <button><a href="">로그아웃</a></button>
+      <button><a href="">마이페이지</a></button>
+    </div>
+  </header>
+  <main>
+    <h2>나의 정보</h2>
+    <div>
+      <p>포인트 : <%= data.point %>P</p>
+    </div>
+    <article>
+      <p>
+        아이디 : <%= data.account_id %>
+      </p>
+      <p>
+        닉네임 : <%= data.nickname %>
+      </p>
+      <p>
+        전화번호 : <%= data.phone %>
+      </p>
+      <p>
+        주 소 : <%= data.address %>
+      </p>
+    </article>
+  </main>
+</body>
+
+</html>
