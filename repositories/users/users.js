@@ -11,8 +11,9 @@ class UserRepository {
       });
 
       return user;
-    } catch {
-      return 400;
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   };
 }

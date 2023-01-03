@@ -1,5 +1,3 @@
-const { Op } = require('sequelize');
-
 class OrdersRepository {
   constructor(orderModel, reviewModel) {
     this.orderModel = orderModel;
@@ -10,6 +8,7 @@ class OrdersRepository {
     try {
       const orders = await this.orderModel.findAll({
         attributes: [
+          'id',
           'nickname',
           'phone',
           'address',
@@ -20,17 +19,18 @@ class OrdersRepository {
         ],
         where: { status: 0 },
       });
-
       return orders;
-    } catch {
-      return 400;
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   };
 
-  getOrders = async () => {
+  getOrders = async (user_id) => {
     try {
       const orders = await this.orderModel.findAll({
         attributes: [
+          'id',
           'nickname',
           'phone',
           'address',
@@ -40,7 +40,7 @@ class OrdersRepository {
           'createdAt',
         ],
         where: {
-          [Op.not]: [{ status: 0 }],
+          company_id: user_id,
         },
         include: {
           model: this.reviewModel,
@@ -49,8 +49,9 @@ class OrdersRepository {
       });
 
       return orders;
-    } catch {
-      return 400;
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   };
 
@@ -61,19 +62,30 @@ class OrdersRepository {
       });
 
       return order;
-    } catch {
-      return 400;
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   };
 
-  changeStatus = async (order_id, status) => {
+  acceptRequest = async (userId, orderId) => {
     try {
-      const order = await this.orderModel.update(
-        { status },
-        { where: { id: order_id } }
+      await this.orderModel.update(
+        { company_id: userId, status: 1 },
+        { where: { id: orderId } }
       );
-    } catch {
-      return 400;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
+  changeStatus = async (orderId, status) => {
+    try {
+      await this.orderModel.update({ status }, { where: { id: orderId } });
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   };
 }

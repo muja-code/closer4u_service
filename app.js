@@ -10,12 +10,16 @@ const models = require('./models/index');
 const env = process.env;
 const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookie_parser());
 app.use('/api', router);
 
 app.get('/', (req, res) => {
-  res.send('어서오세요');
+  res.render('index');
 });
 
 // mysql 연결 상태 확인
