@@ -11,7 +11,8 @@ class OrdersController {
         throw orders;
       }
 
-      res.status(200).render('order-requests', { datas: orders });
+      res.status(200).json({ datas: orders });
+      // res.status(200).render('order-requests', { datas: orders });
     } catch (error) {
       console.log(error);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
@@ -20,17 +21,17 @@ class OrdersController {
 
   getOrders = async (req, res, next) => {
     try {
-      const user_id = 3;
-      const orders = await this.ordersService.getOrders(user_id);
+      const userId = 3;
+      const orders = await this.ordersService.getOrders(userId);
 
       if (typeof orders.message !== 'undefined') {
         throw orders;
       }
 
-      // res.status(200).json({ data: orders });
-      res.status(200).render('order-list', {
-        datas: orders,
-      });
+      res.status(200).json({ datas: orders });
+      // res.status(200).render('order-list', {
+      //   datas: orders,
+      // });
     } catch (error) {
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
@@ -53,7 +54,8 @@ class OrdersController {
       } else if (error.message === 'Status Error') {
         res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
       } else {
-        res.status(500).json({ errorMessage: error.message });
+        console.log(error);
+        res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
       }
     }
   };

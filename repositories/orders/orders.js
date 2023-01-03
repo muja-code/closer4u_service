@@ -26,7 +26,7 @@ class OrdersRepository {
     }
   };
 
-  getOrders = async (user_id) => {
+  getOrders = async (userId) => {
     try {
       const orders = await this.orderModel.findAll({
         attributes: [
@@ -40,7 +40,7 @@ class OrdersRepository {
           'createdAt',
         ],
         where: {
-          company_id: user_id,
+          company_id: userId,
         },
         include: {
           model: this.reviewModel,
@@ -55,10 +55,10 @@ class OrdersRepository {
     }
   };
 
-  getOrder = async (order_id) => {
+  getOrder = async (orderId) => {
     try {
       const order = await this.orderModel.findOne({
-        where: { id: order_id },
+        where: { id: orderId },
       });
 
       return order;
