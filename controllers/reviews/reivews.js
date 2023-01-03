@@ -1,4 +1,4 @@
-const ReviewsService = require('../../service/reviews/reviews.js');
+const ReviewsService = require('../../services/reviews/reviews.js');
 
 class ReviewsController {
   reivewsService = new ReviewsService();
@@ -15,7 +15,8 @@ class ReviewsController {
 
       if (createReivewData === 400) {
         throw 400;
-      } else if (createReivewData === 403) {// 로그인 쿠키 없을 경우
+      } else if (createReivewData === 403) {
+        // 로그인 쿠키 없을 경우
         throw 403;
       } else if (createReivewData === 404) {
         throw 404;
