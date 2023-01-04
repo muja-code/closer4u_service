@@ -12,6 +12,10 @@ class ReivewsRepository {
         comment,
       });
 
+      if (!createRievewData.mark || !createRievewData.comment) {
+        return 400;
+      }
+
       return createRievewData;
     } catch (error) {
       console.log('ReivewsRepositoryCreateReivewError :', error.message);
