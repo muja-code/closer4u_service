@@ -24,9 +24,9 @@ class OrdersService {
     }
   };
 
-  getOrders = async (userId) => {
+  getCustomerOrders = async (userId) => {
     try {
-      const orders = await this.ordersRepository.getOrders(userId);
+      const orders = await this.ordersRepository.getCustomerOrders(userId);
 
       if (!orders) {
         throw new Error('Order Error');
@@ -43,6 +43,24 @@ class OrdersService {
     }
   };
 
+  getCompanyOrders = async (userId) => {
+    try {
+      const orders = await this.ordersRepository.getCompanyOrders(userId);
+
+      if (!orders) {
+        throw new Error('Order Error');
+      }
+
+      for (let order of orders) {
+        order.date = dateFormat(order.createdAt);
+      }
+      return orders;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
   acceptRequest = async (userId, orderId) => {
     try {
       const order = await this.ordersRepository.getOrder(orderId);
@@ -50,6 +68,12 @@ class OrdersService {
       if (!order) {
         throw new Error('Order Error');
       }
+
+      console.log(order.status);
+      if (order.status !== 0) {
+        throw new Error('Status Error');
+      }
+
       await this.ordersRepository.acceptRequest(userId, orderId);
       return true;
     } catch (error) {
@@ -65,7 +89,7 @@ class OrdersService {
         throw new Error('Order Error');
       }
 
-      if (order.status === 4) {
+      if (order.status === 4 || order.status === 0) {
         throw new Error('Status Error');
       }
 

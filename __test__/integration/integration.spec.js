@@ -46,7 +46,7 @@ describe('closer4u api 통합 테스트', () => {
   });
 
   test('PUT /accept/:orderId API 주문 접수 통합테스트 orderId 파라미터가 없는 실패', async () => {
-    const response = await supertest(app).put('/api/orders/accept/5');
+    const response = await supertest(app).put('/api/orders/accept/');
 
     expect(response.status).toEqual(404);
 
@@ -85,6 +85,7 @@ describe('closer4u api 통합 테스트', () => {
     });
   });
 });
+
 afterAll(async () => {
   if (process.env.NODE_ENV === 'test') {
     await sequelize.sync({ force: true });
