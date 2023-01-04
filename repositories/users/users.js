@@ -6,8 +6,29 @@ class UserRepository {
   findUser = async (userId) => {
     try {
       const user = await this.userModel.findOne({
-        attributes: ['account_id', 'nickname', 'phone', 'address', 'point'],
+        attributes: [
+          'id',
+          'account_id',
+          'nickname',
+          'phone',
+          'address',
+          'point',
+          'member',
+        ],
         where: { id: userId },
+      });
+
+      return user;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
+  loginUser = async (userId) => {
+    try {
+      const user = await this.userModel.findOne({
+        where: { account_id: userId },
       });
 
       return user;
