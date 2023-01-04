@@ -15,6 +15,7 @@ let mockRequest = {
 let mockResponse = {
   status: jest.fn(),
   json: jest.fn(),
+  render: jest.fn(),
 };
 
 let ordersController = new OrdersController();
@@ -61,7 +62,7 @@ describe('3계층 아키텍처 패턴 orders 컨트롤러 unit 테스트', () =>
     expect(mockResponse.status).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledWith(200);
 
-    expect(mockResponse.json).toHaveBeenCalledWith({
+    expect(mockResponse.render).toHaveBeenCalledWith('order-requests', {
       datas: ordersReturnValue,
     });
   });
@@ -110,7 +111,7 @@ describe('3계층 아키텍처 패턴 orders 컨트롤러 unit 테스트', () =>
     expect(mockResponse.status).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledWith(200);
 
-    expect(mockResponse.json).toHaveBeenCalledWith({
+    expect(mockResponse.render).toHaveBeenCalledWith('order-list', {
       datas: ordersReturnValue,
     });
   });

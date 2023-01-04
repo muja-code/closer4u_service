@@ -11,6 +11,7 @@ let mockRequest = {
 let mockResponse = {
   status: jest.fn(),
   json: jest.fn(),
+  render: jest.fn(),
 };
 
 let mockError = new Error('mock Error');
@@ -44,7 +45,7 @@ describe('3계층 아키텍처 패턴 users 컨트롤러 unit 테스트', () => 
     expect(mockResponse.status).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledWith(200);
 
-    expect(mockResponse.json).toHaveBeenCalledWith({
+    expect(mockResponse.render).toHaveBeenCalledWith('mypage', {
       data: userReturnValue,
     });
   });

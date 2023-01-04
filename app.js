@@ -36,3 +36,5 @@ models.sequelize
 app.listen(env.PORT, () => {
   console.log(env.PORT, '번 포트가 실행되었습니다.');
 });
+
+module.exports = app;
