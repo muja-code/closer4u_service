@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>가까운4이 세탁서비스</title>
+    <style>
+      @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+      fieldset,
+      label {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        margin: 20px;
+      }
+      h1 {
+        font-size: 1.5em;
+        margin: 10px;
+      }
+
+      /****** Style Star Rating Widget *****/
+
+      .rating {
+        border: none;
+        float: left;
+        position: fixed;
+        margin-top: -23px;
+        margin-left: 40px;
+      }
+
+      .rating > input {
+        display: none;
+      }
+      .rating > label:before {
+        margin: 5px;
+        font-size: 1.25em;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: '\f005';
+      }
+
+      .rating > .half:before {
+        content: '\f089';
+      }
+
+      .rating > label {
+        color: #ddd;
+        float: right;
+      }
+
+      .comment {
+        margin-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .comment > label {
+        padding-top: 15px;
+      }
+
+      .comment > textarea {
+        margin-bottom: -20px;
+        padding-top: 20px;
+      }
+
+      .sub_button {
+        margin-top: 20px;
+      }
+
+      /***** CSS Magic to Highlight Stars on Hover *****/
+
+      .rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label {
+        color: #ffd700;
+      } /* hover previous stars in list */
+
+      .rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label {
+        color: #ffed85;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <img src="x" />
+        <h1>가까운4이 세탁서비스</h1>
+      </div>
+
+      <div class="buttons">
+        <button><a href="/order">주문신청</a></button>
+        <button><a href="/order-list">주문내역</a></button>
+        <button><a href="">로그인</a></button>
+        <button><a href="">회원가입</a></button>
+        <button><a href="">로그아웃</a></button>
+        <button><a href="/api/users">마이페이지</a></button>
+      </div>
+      <hr />
+
+      <main>
+        <div>
+          <h1>리뷰 작성</h1>
+          <form action="/api/orders/1/reivews" method="post">
+            <div>
+              <label>평점</label>
+              <div class="rating">
+                <input type="radio" id="star5" name="mark" value="5" /><label
+                  class="full"
+                  for="star5"
+                  title="Awesome - 5 stars"
+                ></label>
+
+                <input type="radio" id="star4" name="mark" value="4" /><label
+                  class="full"
+                  for="star4"
+                  title="Pretty good - 4 stars"
+                ></label>
+
+                <input type="radio" id="star3" name="mark" value="3" /><label
+                  class="full"
+                  for="star3"
+                  title="Meh - 3 stars"
+                ></label>
+
+                <input type="radio" id="star2" name="mark" value="2" /><label
+                  class="full"
+                  for="star2"
+                  title="Kinda bad - 2 stars"
+                ></label>
+
+                <input
+                  type="radio"
+                  id="star1"
+                  name="mark"
+                  value="1"
+                  required
+                /><label
+                  class="full"
+                  for="star1"
+                  title="Sucks big time - 1 star"
+                ></label>
+              </div>
+            </div>
+            <div class="comment">
+              <label>리뷰</label>
+              <textarea name="comment"></textarea>
+            </div>
+            <button type="submit" class="sub_button">작성하기</button>
+          </form>
+        </div>
+      </main>
+    </header>
+  </body>
+</html>

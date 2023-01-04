@@ -12,7 +12,7 @@ class ReivewsService {
         comment
       );
 
-      if (!createReivewData) {
+      if (createReivewData === 400) {
         throw 400;
       }
 

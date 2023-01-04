@@ -14,16 +14,13 @@ class ReviewsController {
       );
 
       if (createReivewData === 400) {
-        throw 400;
-      } else if (createReivewData === 403) {
-        // 로그인 쿠키 없을 경우
-        throw 403;
-      } else if (createReivewData === 404) {
-        throw 404;
-      }
-
+        return res.status(400).json({
+          // message: '요청이 올바르지 않습니다.',
+        });
+      } // 로그인 쿠키 없을 경우 throw 403
+      // res.redirect('/order-list');
       res.status(201).json({
-        data: createReivewData,
+        // data: createReivewData,
         message: '리뷰작성을 성공했습니다.',
       });
     } catch (error) {
@@ -31,8 +28,6 @@ class ReviewsController {
         res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
       } else if (error === 403) {
         res.status(403).json({ errorMessage: '로그인이 필요합니다.' });
-      } else {
-        res.status(500).json({ errorMessage: error.message });
       }
     }
   };
