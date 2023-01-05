@@ -1,10 +1,10 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 
-const UserRepository = require("../../repositories/users/users");
-const { User } = require("../../models");
+const UserRepository = require('../../repositories/users/users');
+const { User } = require('../../models');
 
 class UserService {
   userRepository = new UserRepository(User);
@@ -32,37 +32,37 @@ class UserService {
       if (duplicateUser.length) {
         return {
           code: 400,
-          errorMessage: "이미 가입된 아이디 또는 닉네임이 있습니다.",
+          errorMessage: '이미 가입된 아이디 또는 닉네임이 있습니다.',
         };
       }
       if (!validateId.test(account_id)) {
         return {
           code: 400,
-          errorMessage: "아이디가 작성 형식과 맞지 않습니다.",
+          errorMessage: '아이디가 작성 형식과 맞지 않습니다.',
         };
       }
       if (!validatePassword.test(password)) {
         return {
           code: 400,
-          errorMessage: "비밀번호가 작성 형식과 맞지 않습니다.",
+          errorMessage: '비밀번호가 작성 형식과 맞지 않습니다.',
         };
       }
       if (password !== check_password) {
         return {
           code: 400,
-          errorMessage: "비밀번호가 비밀번호 확인란과 다릅니다.",
+          errorMessage: '비밀번호가 비밀번호 확인란과 다릅니다.',
         };
       }
       if (!nickname) {
-        return { code: 400, errorMessage: "닉네임이 입력되지 않았습니다." };
+        return { code: 400, errorMessage: '닉네임이 입력되지 않았습니다.' };
       }
       if (!phone) {
-        return { code: 400, errorMessage: "연락처가 입력되지 않았습니다." };
+        return { code: 400, errorMessage: '연락처가 입력되지 않았습니다.' };
       }
       if (!address) {
-        return { code: 400, errorMessage: "배송지가 입력되지 않았습니다." };
+        return { code: 400, errorMessage: '배송지가 입력되지 않았습니다.' };
       }
-
+      console.log(point);
       const encryptPassword = await bcrypt.hash(password, saltRounds);
       await this.userRepository.createUser(
         member,
@@ -75,14 +75,14 @@ class UserService {
       );
       return {
         code: 201,
-        Message: "회원가입에 성공하셨습니다.",
+        Message: '회원가입에 성공하셨습니다.',
       };
     } catch (error) {
       console.log(error);
-      console.log("signup error - service");
+      console.log('signup error - service');
       return {
         code: 400,
-        errorMessage: "요청이 올바르지 않습니다. - service",
+        errorMessage: '요청이 올바르지 않습니다. - service',
       };
     }
   };
@@ -105,7 +105,9 @@ class UserService {
         throw new Error('User Error');
       }
 
-      if (userInfo.password !== password) {
+      const check = await bcrypt.compare(password, userInfo.password);
+
+      if (!check) {
         return new Error('Password Error');
       }
 
@@ -144,4 +146,3 @@ class UserService {
 }
 
 module.exports = UserService;
-
