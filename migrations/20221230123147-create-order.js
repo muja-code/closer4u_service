@@ -11,7 +11,6 @@ module.exports = {
       },
       nickname: {
         type: Sequelize.STRING(100),
-        unique: true,
         allowNull: false,
       },
       phone: {
@@ -33,6 +32,9 @@ module.exports = {
         defaultValue: 0,
       },
       user_id: {
+        type: Sequelize.INTEGER,
+      },
+      company_id: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

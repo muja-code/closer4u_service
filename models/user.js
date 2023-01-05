@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(100),
         allowNull: false,
       },
       address: {
@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       point: {
         type: DataTypes.INTEGER,
+      },
+      member: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     {

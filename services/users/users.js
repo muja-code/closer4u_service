@@ -102,40 +102,40 @@ class UserService {
       const userInfo = await this.userRepository.loginUser(userId);
 
       if (!userInfo) {
-        throw new Error("User Error");
+        throw new Error('User Error');
       }
 
       if (userInfo.password !== password) {
-        return new Error("Password Error");
+        return new Error('Password Error');
       }
 
       const accessToken = jwt.sign(
         {
-          type: "JWT",
+          type: 'JWT',
           userId: userInfo.id,
           accountId: userInfo.account_id,
           member: userInfo.member,
         },
         process.env.ACCESS_JWT_SECRET_KET,
         {
-          expiresIn: "10m",
+          expiresIn: '10m',
         }
       );
 
       const refreshToken = jwt.sign(
         {
-          type: "JWT",
+          type: 'JWT',
           userId: userInfo.id,
           accountId: userInfo.account_id,
           member: userInfo.member,
         },
         process.env.REFRESH_JWT_SECRET_KET,
         {
-          expiresIn: "7d",
+          expiresIn: '7d',
         }
       );
 
-      return [accessToken, refreshToken, userInfo];
+      return [accessToken, refreshToken];
     } catch (error) {
       console.log(error);
       return error;
@@ -144,3 +144,4 @@ class UserService {
 }
 
 module.exports = UserService;
+
