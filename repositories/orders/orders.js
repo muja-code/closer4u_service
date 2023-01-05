@@ -29,35 +29,6 @@ class OrdersRepository {
     }
   };
 
-  getCustomerOrders = async (userId) => {
-    try {
-      const orders = await this.orderModel.findAll({
-        attributes: [
-          'id',
-          'nickname',
-          'phone',
-          'address',
-          'requested',
-          'status',
-          'image',
-          'createdAt',
-        ],
-        where: {
-          user_id: userId,
-          [Op.not]: { company_id: 0 },
-        },
-        include: {
-          model: this.reviewModel,
-          attributes: ['comment', 'mark'],
-        },
-      });
-      return orders;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  };
-
   getCompanyOrders = async (userId) => {
     try {
       const orders = await this.orderModel.findAll({

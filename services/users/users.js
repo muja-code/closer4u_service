@@ -21,22 +21,8 @@ class UserService {
     const validatePassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{5,10}/gs; // 숫자, 영어 대소문자, 특수문자 각 1글자 이상 포함, 5~10글자, 글자 중간 공백 불가
     let point = 0;
     try {
-      console.log('111122222', member, point);
       if (member === '0') {
-        console.log('1111', member, point);
         point = 1000000;
-        console.log('2222', member, point);
-      }
-      const duplicateUser = await User.findAll({
-        where: {
-          [Op.or]: [{ account_id }, { nickname }],
-        },
-      });
-      if (duplicateUser.length) {
-        return {
-          code: 400,
-          errorMessage: '이미 가입된 아이디 또는 닉네임이 있습니다.',
-        };
       }
       if (!validateId.test(account_id)) {
         return {
@@ -65,7 +51,17 @@ class UserService {
       if (!address) {
         return { code: 400, errorMessage: '배송지가 입력되지 않았습니다.' };
       }
-      console.log(point);
+      const duplicateUser = await User.findAll({
+        where: {
+          [Op.or]: [{ account_id }, { nickname }],
+        },
+      });
+      if (duplicateUser.length) {
+        return {
+          code: 400,
+          errorMessage: '이미 가입된 아이디 또는 닉네임이 있습니다.',
+        };
+      }
       const encryptPassword = await bcrypt.hash(password, saltRounds);
       await this.userRepository.createUser(
         member,
