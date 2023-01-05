@@ -4,14 +4,15 @@ const { Review } = require('../../models');
 class ReivewsService {
   reivewsRepository = new ReivewsRepository(Review);
 
-  createReivew = async (mark, comment) => {
+  createReivew = async (userId, orderId, mark, comment) => {
     try {
       // Repository 에게 데이터를 요청
       const createReivewData = await this.reivewsRepository.createReivew(
+        userId,
+        orderId,
         mark,
         comment
       );
-
       if (createReivewData === 400) {
         throw 400;
       }

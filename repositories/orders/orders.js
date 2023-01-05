@@ -1,4 +1,3 @@
-
 const { Op } = require('sequelize');
 
 class OrdersRepository {
@@ -80,6 +79,8 @@ class OrdersRepository {
           attributes: ['comment', 'mark'],
         },
       });
+
+      console.log(orders);
       return orders;
     } catch (error) {
       console.log(error);
@@ -124,14 +125,18 @@ class OrdersRepository {
     } catch (error) {
       console.log(error);
       return error;
-        }
+    }
   };
-
 
   findAllOrder = async () => {
     try {
       // sequelize 에서 Orders 모델의 findAll 메소드를 사용해 데이터 요청
-      const orders = await this.ordersModel.findAll();
+      const orders = await this.orderModel.findAll({
+        include: {
+          model: this.reviewModel,
+          attributes: ['comment', 'mark'],
+        },
+      });
 
       return orders;
     } catch (error) {
@@ -141,7 +146,7 @@ class OrdersRepository {
     }
   };
 
-  createOrder = async (nickname, phone, address, image, requested) => {
+  createOrder = async (userId, nickname, phone, address, image, requested) => {
     try {
       // // 닉네임 중복 방지
       // const orders = await this.ordersModel.findAll();
@@ -155,13 +160,20 @@ class OrdersRepository {
       //   }
       // }
       // sequelize 에서 Orders 모델의 create 메소드를 사용해 데이터 요청
-      const createOrderData = await this.ordersModel.create({
+      const createOrderData = await this.orderModel.create({
         nickname,
         phone,
         address,
         image,
         requested,
+        user_id: userId,
       });
+
+      console.log('체크');
+      await this.userModel.decrement(
+        { point: 10000 },
+        { where: { id: userId } }
+      );
 
       if (
         !createOrderData.nickname ||
@@ -176,7 +188,6 @@ class OrdersRepository {
       // 추가로 쿠키에 로그인 정보 없을때 403
       console.log('OrderRepositoryCreateOrderError :', error.message);
       return 400;
-
     }
   };
 }

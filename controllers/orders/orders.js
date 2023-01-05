@@ -1,6 +1,5 @@
 const OrdersService = require('../../services/orders/orders');
 
-
 class OrdersController {
   ordersService = new OrdersService();
 
@@ -33,14 +32,17 @@ class OrdersController {
           .status(400)
           .json({ errorMessage: '요청이 올바르지 않습니다.' });
       }
-
-      res.status(200).json({ data: orders });
+      // res.status(200).json({ data: orders });
+      res.status(200).render('order-list', {
+        datas: orders,
+        userId: req.userInfo.userId,
+        member: req.userInfo.member,
+      });
     } catch (error) {
       // console.log(error);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
-
 
   getCustomerOrders = async (req, res, next) => {
     try {
@@ -135,15 +137,17 @@ class OrdersController {
       } else {
         res.status(500).json({ errorMessage: '요청이 올바르지 않습니다.' });
       }
-        }
+    }
   };
 
   // 주문 신청
   createOrders = async (req, res, next) => {
     try {
       const { nickname, phone, address, image, requested } = req.body;
+      const userId = req.userInfo.userId;
 
       const createOrderData = await this.ordersService.createOrder(
+        userId,
         nickname,
         phone,
         address,
@@ -174,9 +178,7 @@ class OrdersController {
       //     errorMessage: '닉네임이 중복되었습니다.',
       //   });
       // }
-      res.status(201).render('order-list', {
-        message: '주문 신청이 완료되었습니다.',
-      });
+      res.status(201).redirect('/api/orders/customers');
 
       // res.status(201).json({
       //   // data: createOrderData,

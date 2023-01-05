@@ -24,7 +24,7 @@ class UserRepository {
       });
       return user;
     } catch (error) {
-      console.log("signup error - repository");
+      console.log('signup error - repository');
       return error;
     }
   };
@@ -33,13 +33,13 @@ class UserRepository {
     try {
       const user = await this.userModel.findOne({
         attributes: [
-          "id",
-          "account_id",
-          "nickname",
-          "phone",
-          "address",
-          "point",
-          "member",
+          'id',
+          'account_id',
+          'nickname',
+          'phone',
+          'address',
+          'point',
+          'member',
         ],
         where: { id: userId },
       });
