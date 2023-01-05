@@ -2,7 +2,7 @@ const OrdersService = require('../../../services/orders/orders');
 
 let mockOrdersRepository = {
   getOrderRequests: jest.fn(),
-  getOrders: jest.fn(),
+  getCompanyOrders: jest.fn(),
   getOrder: jest.fn(),
   acceptRequest: jest.fn(),
   changeStatus: jest.fn(),
@@ -52,7 +52,7 @@ describe('3계층 아키텍처 패턴 orders 서비스 unit 테스트', () => {
 
     expect(orders).toEqual(ordersReturnValue);
   });
-  test('orders 서비스의 getOrders Method 성공', async () => {
+  test('orders 서비스의 getCompanyOrders Method 성공', async () => {
     const ordersReturnValue = [
       {
         id: 1,
@@ -88,11 +88,11 @@ describe('3계층 아키텍처 패턴 orders 서비스 unit 테스트', () => {
       },
     ];
 
-    mockOrdersRepository.getOrders = jest.fn(() => ordersReturnValue);
+    mockOrdersRepository.getCompanyOrders = jest.fn(() => ordersReturnValue);
 
-    const orders = await ordersService.getOrders(mockUserId);
+    const orders = await ordersService.getCompanyOrders(mockUserId);
 
-    expect(mockOrdersRepository.getOrders).toHaveBeenCalledTimes(1);
+    expect(mockOrdersRepository.getCompanyOrders).toHaveBeenCalledTimes(1);
 
     expect(orders).toEqual(ordersReturnValue);
   });
@@ -133,7 +133,7 @@ describe('3계층 아키텍처 패턴 orders 서비스 unit 테스트', () => {
       phone: 123456,
       address: 'address1',
       requested: 'requested1',
-      status: 0,
+      status: 1,
       image: null,
       createdAt: new Date(),
       Reviews: [
@@ -167,14 +167,14 @@ describe('3계층 아키텍처 패턴 orders 서비스 unit 테스트', () => {
     expect(orders).toEqual(mockError);
   });
 
-  test('orders 서비스의 getOrders Method 실패 Order Error', async () => {
+  test('orders 서비스의 getCompanyOrders Method 실패 Order Error', async () => {
     const ordersReturnValue = null;
 
-    mockOrdersRepository.getOrders = jest.fn(() => ordersReturnValue);
+    mockOrdersRepository.getCompanyOrders = jest.fn(() => ordersReturnValue);
 
-    const orders = await ordersService.getOrders(mockUserId);
+    const orders = await ordersService.getCompanyOrders(mockUserId);
 
-    expect(mockOrdersRepository.getOrders).toHaveBeenCalledTimes(1);
+    expect(mockOrdersRepository.getCompanyOrders).toHaveBeenCalledTimes(1);
 
     expect(orders).toEqual(mockError);
   });

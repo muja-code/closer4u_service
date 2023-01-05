@@ -54,7 +54,7 @@ class UserService {
         }
       );
 
-      return [accessToken, refreshToken, userInfo];
+      return [accessToken, refreshToken];
     } catch (error) {
       console.log(error);
       return error;

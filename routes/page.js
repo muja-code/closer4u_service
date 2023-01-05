@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('index');
+  res.render('order-requests');
 });
 router.get('/login_page', (req, res) => {
   res.render('login');

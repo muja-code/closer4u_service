@@ -8,11 +8,19 @@ let mockOrderModel = {
 
 let mockReviewModel = {};
 
+let mockUserModel = {
+  increment: jest.fn(),
+};
+
 let [mockUserId, mockOrderId, mockStatus] = [1, 1, 1];
 
 let mockError = new Error('mock Error');
 
-let ordersRepository = new OrdersRepository(mockOrderModel, mockReviewModel);
+let ordersRepository = new OrdersRepository(
+  mockOrderModel,
+  mockReviewModel,
+  mockUserModel
+);
 
 describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', () => {
   beforeEach(() => {
@@ -51,7 +59,7 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(orders).toEqual(ordersReturnValue);
   });
 
-  test('orders 리포지토리 getOrders Method 성공', async () => {
+  test('orders 리포지토리 getCompanyOrders Method 성공', async () => {
     const ordersReturnValue = [
       {
         id: 1,
@@ -89,7 +97,7 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
 
     ordersRepository.orderModel.findAll = jest.fn(() => ordersReturnValue);
 
-    const orders = await ordersRepository.getOrders(mockUserId);
+    const orders = await ordersRepository.getCompanyOrders(mockUserId);
 
     expect(ordersRepository.orderModel.findAll).toHaveBeenCalledTimes(1);
     expect(orders).toEqual(ordersReturnValue);
@@ -123,11 +131,14 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
 
   test('orders 리포지토리 acceptRequest Method 성공', async () => {
     const orderReturnValue = undefined;
+
     ordersRepository.orderModel.update = jest.fn(() => orderReturnValue);
+    ordersRepository.orderModel.increment = jest.fn(() => orderReturnValue);
 
     const order = await ordersRepository.acceptRequest(mockUserId, mockOrderId);
 
     expect(ordersRepository.orderModel.update).toHaveBeenCalledTimes(1);
+    expect(ordersRepository.userModel.increment).toHaveBeenCalledTimes(1);
     expect(order).toEqual(orderReturnValue);
   });
 
@@ -154,7 +165,7 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(orders).toEqual(ordersReturnValue);
   });
 
-  test('orders 리포지토리 getOrders Method 실패', async () => {
+  test('orders 리포지토리 getCompanyOrders Method 실패', async () => {
     const ordersReturnValue = [
       {
         id: 1,
@@ -192,7 +203,7 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
 
     ordersRepository.orderModel.findAll = jest.fn(() => ordersReturnValue);
 
-    const orders = await ordersRepository.getOrders(mockUserId);
+    const orders = await ordersRepository.getCompanyOrders(mockUserId);
 
     expect(ordersRepository.orderModel.findAll).toHaveBeenCalledTimes(1);
     expect(orders).toEqual(ordersReturnValue);
