@@ -1,5 +1,6 @@
 <%- include('includes/head.ejs') %>
   <main>
+
     <table class="table">
       <% try {%>
         <% if (datas[0].nickname) { %>
@@ -92,6 +93,7 @@
 
             <h3>주문 목록 리스트가 없습니다.</h3>
             <% } %>
+
     </table>
   </main>
   </body>
@@ -108,10 +110,12 @@
             data: {}
           }).then((response) => {
             console.log(response.status);
+
             window.location.href = '/api/orders/companies'
           }).catch((response) => {
             console.log(response.errorMessage);
             window.location.href = '/api/orders/business'
+
           })
         })
       }

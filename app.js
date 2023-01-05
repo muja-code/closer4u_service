@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookie_parser());
 app.use('/api', router);
 app.use('/', pageRouter);
+app.use(express.static('static'));
 
 // mysql 연결 상태 확인
 models.sequelize
