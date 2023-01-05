@@ -2,19 +2,27 @@ const UserController = require('../../../controllers/users/users');
 
 let mockUserService = {
   findUser: jest.fn(),
+  loginUser: jest.fn(),
 };
 
 let mockRequest = {
-  body: jest.fn(),
+  body: { userId: 'test', password: '1234' },
+  userInfo: { userId: 1, member: 1 },
+  cookies: { accessToken: undefined },
 };
 
 let mockResponse = {
   status: jest.fn(),
   json: jest.fn(),
   render: jest.fn(),
+  cookie: jest.fn(),
+  redirect: jest.fn(),
+  clearCookie: jest.fn(),
 };
 
-let mockError = new Error('mock Error');
+let [mockUserId, mockPassword] = ['mock', '1234'];
+
+let mockError = new Error('요청이 올바르지 않습니다.');
 
 let userController = new UserController();
 userController.userService = mockUserService;
@@ -66,5 +74,29 @@ describe('3계층 아키텍처 패턴 users 컨트롤러 unit 테스트', () => 
     expect(mockResponse.json).toHaveBeenCalledWith({
       errorMessage: userReturnValue.errorMessage,
     });
+  });
+
+  test('users 컨트롤러의 loginUser Method 성공', async () => {
+    const userReturnValue = ['accessToken', 'refreshToken'];
+
+    mockUserService.loginUser = jest.fn(() => userReturnValue);
+
+    await userController.loginUser(mockRequest, mockResponse);
+
+    expect(mockUserService.loginUser).toHaveBeenCalledTimes(1);
+    expect(mockResponse.status).toHaveBeenCalledTimes(1);
+    expect(mockResponse.cookie).toHaveBeenCalledTimes(2);
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+
+    expect(mockResponse.redirect).toHaveBeenCalledWith('/api/orders/business');
+  });
+
+  test('users 컨트롤러의 logoutUser Method 성공', async () => {
+    await userController.logoutUser(mockRequest, mockResponse);
+
+    expect(mockResponse.clearCookie).toHaveBeenCalledTimes(2);
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+
+    expect(mockResponse.redirect).toHaveBeenCalledWith('/api/orders/business');
   });
 });

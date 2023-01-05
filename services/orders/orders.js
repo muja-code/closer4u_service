@@ -1,9 +1,9 @@
 const OrdersRepository = require('../../repositories/orders/orders');
-const { Order, Review } = require('../../models');
+const { Order, Review, User } = require('../../models');
 const dateFormat = require('../../utills/date');
 
 class OrdersService {
-  ordersRepository = new OrdersRepository(Order, Review);
+  ordersRepository = new OrdersRepository(Order, Review, User);
 
   getOrderRequests = async () => {
     try {
@@ -74,7 +74,11 @@ class OrdersService {
         throw new Error('Status Error');
       }
 
-      await this.ordersRepository.acceptRequest(userId, orderId);
+      await this.ordersRepository.acceptRequest(
+        userId,
+        orderId,
+        order.point + 10000
+      );
       return true;
     } catch (error) {
       console.log(error);

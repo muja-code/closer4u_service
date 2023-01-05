@@ -33,7 +33,9 @@ const authToken = (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.status(401).redirect('/');
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+    res.status(401).redirect('/login_page');
   }
 
   function validateAccessToken(accessToken) {

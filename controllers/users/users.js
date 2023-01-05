@@ -42,14 +42,10 @@ class UsersController {
         throw user;
       }
 
-      const [accessToken, refreshToken, userInfo] = user;
-      console.log(userInfo.id, userInfo.member);
+      const [accessToken, refreshToken] = user;
       res.cookie('accessToken', accessToken);
       res.cookie('refreshToken', refreshToken);
-      res.status(200).render('index', {
-        userId: userInfo.id,
-        member: userInfo.member,
-      });
+      res.status(200).redirect('/api/orders/business');
     } catch (error) {
       console.log(error);
       if (error.message === 'User Error') {
@@ -57,11 +53,13 @@ class UsersController {
       } else if (error.message === 'Password Error') {
         res.status(400).json({ errorMessage: '비밀번호가 틀립니다.' });
       } else if (error.message === 'Login Error') {
-        res.status(400).json({ errorMessage: '이미 로그인 되어있습니다.' });
+        res.status(400).redirect('/api/orders/business');
+        // res.status(400).json({ errorMessage: '이미 로그인 되어있습니다.' });
       } else {
-        res
-          .status(400)
-          .json({ errorMessage: '요청한 정보가 올바르지 않습니다.' });
+        res.status(400).redirect('/api/orders/business');
+        // res
+        //   .status(400)
+        //   .json({ errorMessage: '요청한 정보가 올바르지 않습니다.' });
       }
     }
   };
@@ -70,7 +68,8 @@ class UsersController {
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
 
-    res.status(200).json({ message: '로그아웃 성공' });
+    res.status(200).redirect('/api/orders/business');
+    // res.status(200).json({ message: '로그아웃 성공' });
   };
 }
 

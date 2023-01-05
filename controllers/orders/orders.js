@@ -83,7 +83,7 @@ class OrdersController {
       } else if (error.message === 'Member Error') {
         res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
       } else {
-        res.status(500).json({ errorMessage: '요청이 올바르지 않습니다.' });
+        res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
       }
     }
   };

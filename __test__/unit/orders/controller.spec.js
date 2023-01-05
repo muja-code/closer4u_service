@@ -2,7 +2,7 @@ const OrdersController = require('../../../controllers/orders/orders');
 
 let mockOrdersService = {
   getOrderRequests: jest.fn(),
-  getOrders: jest.fn(),
+  getCompanyOrders: jest.fn(),
   acceptRequest: jest.fn(),
   changeStatus: jest.fn(),
 };
@@ -10,6 +10,7 @@ let mockOrdersService = {
 let mockRequest = {
   body: jest.fn(),
   params: jest.fn(),
+  userInfo: { userId: 1, member: 1 },
 };
 
 let mockResponse = {
@@ -64,10 +65,12 @@ describe('3계층 아키텍처 패턴 orders 컨트롤러 unit 테스트', () =>
 
     expect(mockResponse.render).toHaveBeenCalledWith('order-requests', {
       datas: ordersReturnValue,
+      userId: mockRequest.userInfo.userId,
+      member: mockRequest.userInfo.member,
     });
   });
 
-  test('orders 컨트롤러의 getOrders Method 성공', async () => {
+  test('orders 컨트롤러의 getCompanyOrders Method 성공', async () => {
     const ordersReturnValue = [
       {
         id: 1,
@@ -103,16 +106,18 @@ describe('3계층 아키텍처 패턴 orders 컨트롤러 unit 테스트', () =>
       },
     ];
 
-    mockOrdersService.getOrders = jest.fn(() => ordersReturnValue);
+    mockOrdersService.getCompanyOrders = jest.fn(() => ordersReturnValue);
 
-    await ordersController.getOrders(mockRequest, mockResponse);
+    await ordersController.getCompanyOrders(mockRequest, mockResponse);
 
-    expect(mockOrdersService.getOrders).toHaveBeenCalledTimes(1);
+    expect(mockOrdersService.getCompanyOrders).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledWith(200);
 
     expect(mockResponse.render).toHaveBeenCalledWith('order-list', {
       datas: ordersReturnValue,
+      userId: mockRequest.userInfo.userId,
+      member: mockRequest.userInfo.member,
     });
   });
 
@@ -162,16 +167,16 @@ describe('3계층 아키텍처 패턴 orders 컨트롤러 unit 테스트', () =>
     expect(mockResponse.json).toHaveBeenCalledWith(ordersReturnValue.message);
   });
 
-  test('orders 컨트롤러의 getOrders Method 실패', async () => {
+  test('orders 컨트롤러의 getCompanyOrders Method 실패', async () => {
     const ordersReturnValue = {
       message: { errorMessage: '요청이 올바르지 않습니다.' },
     };
 
-    mockOrdersService.getOrders = jest.fn(() => ordersReturnValue);
+    mockOrdersService.getCompanyOrders = jest.fn(() => ordersReturnValue);
 
-    await ordersController.getOrders(mockRequest, mockResponse);
+    await ordersController.getCompanyOrders(mockRequest, mockResponse);
 
-    expect(mockOrdersService.getOrders).toHaveBeenCalledTimes(1);
+    expect(mockOrdersService.getCompanyOrders).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledWith(400);
 

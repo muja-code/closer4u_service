@@ -1,9 +1,10 @@
 const { Op } = require('sequelize');
 
 class OrdersRepository {
-  constructor(orderModel, reviewModel) {
+  constructor(orderModel, reviewModel, userModel) {
     this.orderModel = orderModel;
     this.reviewModel = reviewModel;
+    this.userModel = userModel;
   }
 
   getOrderRequests = async () => {
@@ -98,11 +99,17 @@ class OrdersRepository {
     }
   };
 
-  acceptRequest = async (userId, orderId) => {
+  acceptRequest = async (userId, orderId, point) => {
     try {
       await this.orderModel.update(
         { company_id: userId, status: 1 },
         { where: { id: orderId } }
+      );
+
+      // await this.userModel.update({ where: { id: userId } });
+      await this.userModel.increment(
+        { point: 10000 },
+        { where: { id: userId } }
       );
     } catch (error) {
       console.log(error);

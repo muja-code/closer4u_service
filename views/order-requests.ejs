@@ -1,50 +1,56 @@
 <%- include('includes/head.ejs') %>
   <main>
-    <h2>주문접수내역</h2>
     <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">세탁물 사진</th>
-          <th scope="col">신청일자</th>
-          <th scope="col">닉네임</th>
-          <th scope="col">배송지</th>
-          <th scope="col">요청사항</th>
-          <th scope="col">주문상태</th>
-          <th scope="col">리뷰</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for (let data of datas) { %>
-          <tr>
-            <th scope="row">
-              <img src="<%= data.image%>">
-            </th>
-            <td>
-              <%= data.date%>
-            </td>
-            <td>
-              <%= data.nickname%>
-            </td>
-            <td>
-              <%= data.address%>
-            </td>
-            <td>
-              <%= data.requested%>
-            </td>
-            <td>
-              <% if (member===0) { %>
-                <% if (data.status===0) { %>
-                  <button type="button" class="btn btn-secondary order-accept" disabled value="<%= data.id %>">대기
-                    중</button>
-                  <% } %>
-                    <% } else { %>
-                      <button type="button" class="btn btn-secondary order-accept" value="<%= data.id %>">대기
-                        중</button>
-                      <% } %>
-            </td>
-          </tr>
+      <% try {%>
+        <% if (datas[0].nickname) { %>
+          <thead>
+            <tr>
+              <th scope="col">세탁물 사진</th>
+              <th scope="col">신청일자</th>
+              <th scope="col">닉네임</th>
+              <th scope="col">배송지</th>
+              <th scope="col">요청사항</th>
+              <th scope="col">주문상태</th>
+            </tr>
+          </thead>
           <% } %>
-      </tbody>
+            <tbody>
+              <% for (let data of datas) { %>
+                <tr>
+                  <th scope="row">
+                    <img src="<%= data.image%>">
+                  </th>
+                  <td>
+                    <%= data.date%>
+                  </td>
+                  <td>
+                    <%= data.nickname%>
+                  </td>
+                  <td>
+                    <%= data.address%>
+                  </td>
+                  <td>
+                    <%= data.requested%>
+                  </td>
+                  <td>
+                    <% if (member===0) { %>
+                      <% if (data.status===0) { %>
+                        <button type="button" class="btn btn-secondary order-accept" disabled value="<%= data.id %>">대기
+                          중</button>
+                        <% } %>
+                          <% } else { %>
+                            <button type="button" class="btn btn-secondary order-accept" value="<%= data.id %>">대기
+                              중</button>
+                            <% } %>
+                  </td>
+                </tr>
+                <% } %>
+            </tbody>
+
+            <% } catch {%>
+              <h3>주문 신청 리스트가 없습니다.</h3>
+              <% } %>
+
     </table>
   </main>
   </body>
@@ -62,7 +68,7 @@
             url: '/api/orders/accept/' + orderId,
             data: {}
           }).then(() => {
-            window.location.href = '/api/orders'
+            window.location.href = '/api/orders/companies'
           })
         })
       }

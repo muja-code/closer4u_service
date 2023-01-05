@@ -1,23 +1,22 @@
 <%- include('includes/head.ejs') %>
   <main>
-    <h2>나의 정보</h2>
-    <div>
-      <p>포인트 : <%= data.point %>P</p>
+
+    <div class="card" style="width: 18rem;">
+      <div class="card-header">
+        <h2>나의 정보</h2>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">아이디 : <%= data.account_id %>
+        </li>
+        <li class="list-group-item">닉네임 : <%= data.nickname %>
+        </li>
+        <li class="list-group-item">전화번호 : <%= data.phone %>
+        </li>
+        <li class="list-group-item">주 소 : <%= data.address %>
+        </li>
+        <li class="list-group-item">포인트 : <%= data.point %>P</li>
+      </ul>
     </div>
-    <article>
-      <p>
-        아이디 : <%= data.account_id %>
-      </p>
-      <p>
-        닉네임 : <%= data.nickname %>
-      </p>
-      <p>
-        전화번호 : <%= data.phone %>
-      </p>
-      <p>
-        주 소 : <%= data.address %>
-      </p>
-    </article>
   </main>
   </body>
 
