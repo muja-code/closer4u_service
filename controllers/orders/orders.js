@@ -44,25 +44,6 @@ class OrdersController {
     }
   };
 
-  getCustomerOrders = async (req, res, next) => {
-    try {
-      const { userId } = req.userInfo;
-      const orders = await this.ordersService.getCustomerOrders(userId);
-
-      if (typeof orders.message !== 'undefined') {
-        throw orders;
-      }
-
-      res.status(200).render('order-list', {
-        datas: orders,
-        userId: req.userInfo.userId,
-        member: req.userInfo.member,
-      });
-    } catch (error) {
-      res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
-    }
-  };
-
   getCompanyOrders = async (req, res, next) => {
     try {
       const { userId } = req.userInfo;
@@ -81,6 +62,7 @@ class OrdersController {
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
+
   acceptRequest = async (req, res, next) => {
     try {
       const { userId, member } = req.userInfo;

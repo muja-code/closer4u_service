@@ -24,34 +24,13 @@ class OrdersService {
     }
   };
 
-  getCustomerOrders = async (userId) => {
-    try {
-      const orders = await this.ordersRepository.getCustomerOrders(userId);
-
-      if (!orders) {
-        throw new Error('Order Error');
-      }
-
-      for (let order of orders) {
-        order.date = dateFormat(order.createdAt);
-      }
-
-      return orders;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  };
-
   getCompanyOrders = async (userId) => {
     try {
       const orders = await this.ordersRepository.getCompanyOrders(userId);
-
       if (!orders) {
         throw new Error('Order Error');
       }
-
-      return orders.map((order) => {
+      const datas = orders.map((order) => {
         return {
           id: order.id,
           nickname: order.nickname,
@@ -64,6 +43,8 @@ class OrdersService {
           review: order.Reviews,
         };
       });
+
+      return datas;
     } catch (error) {
       console.log(error);
       return error;

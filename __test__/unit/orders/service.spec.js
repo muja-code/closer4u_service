@@ -1,4 +1,5 @@
 const OrdersService = require('../../../services/orders/orders');
+const dateFormat = require('../../../utills/date');
 
 let mockOrdersRepository = {
   getOrderRequests: jest.fn(),
@@ -56,10 +57,10 @@ describe('3계층 아키텍처 패턴 orders 서비스 unit 테스트', () => {
     const ordersReturnValue = [
       {
         id: 1,
-        nickname: 'nickname1',
+        nickname: 'nickname',
         phone: 123456,
-        address: 'address1',
-        requested: 'requested1',
+        address: 'address',
+        requested: 'requested',
         status: 0,
         image: null,
         createdAt: new Date(),
@@ -70,18 +71,21 @@ describe('3계층 아키텍처 패턴 orders 서비스 unit 테스트', () => {
           },
         ],
       },
+    ];
+
+    const returnValue = [
       {
         id: 1,
-        nickname: 'nickname2',
+        nickname: 'nickname',
         phone: 123456,
-        address: 'address2',
-        requested: 'requested2',
+        address: 'address',
+        requested: 'requested',
         status: 0,
         image: null,
-        createdAt: new Date(),
-        Reviews: [
+        date: dateFormat(new Date()),
+        review: [
           {
-            comment: 'comment2',
+            comment: 'comment',
             mark: 4,
           },
         ],
@@ -94,7 +98,7 @@ describe('3계층 아키텍처 패턴 orders 서비스 unit 테스트', () => {
 
     expect(mockOrdersRepository.getCompanyOrders).toHaveBeenCalledTimes(1);
 
-    expect(orders).toEqual(ordersReturnValue);
+    expect(orders).toEqual(returnValue);
   });
 
   test('orders 서비스의 acceptRequest Method 성공', async () => {
