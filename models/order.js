@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       nickname: {
         type: DataTypes.STRING(100),
-        unique: true,
         allowNull: false,
       },
       phone: {
@@ -39,6 +38,12 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       user_id: {
+        type: DataTypes.INTEGER,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+      },
+      company_id: {
         type: DataTypes.INTEGER,
       },
     },

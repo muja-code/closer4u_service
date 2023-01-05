@@ -2,3 +2,5 @@
 .env
 /static/img/*
 .prettierrc.js
+/coverage
+
