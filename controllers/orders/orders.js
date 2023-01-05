@@ -57,11 +57,14 @@ class OrdersController {
       //     errorMessage: '닉네임이 중복되었습니다.',
       //   });
       // }
-      // res.redirect('/order-list');
-      res.status(201).json({
-        // data: createOrderData,
+      res.status(201).render('order-list', {
         message: '주문 신청이 완료되었습니다.',
       });
+
+      // res.status(201).json({
+      //   // data: createOrderData,
+      //   message: '주문 신청이 완료되었습니다.',
+      // });
     } catch (error) {
       if (error === 400) {
         res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });

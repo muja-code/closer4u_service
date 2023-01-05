@@ -6,6 +6,7 @@ require('dotenv').config();
 // 내부 모듈
 const router = require('./routes/index');
 const models = require('./models/index');
+const pageRouter = require('./routes/page');
 
 const env = process.env;
 const app = express();
@@ -14,25 +15,12 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookie_parser());
 app.use('/api', router);
+app.use('/', pageRouter);
+app.use(express.static('static'));
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-app.get('/order', (req, res) => {
-  res.render('order');
-});
-
-app.get('/order-list', (req, res) => {
-  res.render('order-list');
-});
-
-app.get('/review', (req, res) => {
-  res.render('review');
-});
 // mysql 연결 상태 확인
 models.sequelize
   .sync()
@@ -47,3 +35,5 @@ models.sequelize
 app.listen(env.PORT, () => {
   console.log(env.PORT, '번 포트가 실행되었습니다.');
 });
+
+module.exports = app;

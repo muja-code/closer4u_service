@@ -11,6 +11,7 @@ let mockRequest = {
 let mockResponse = {
   status: jest.fn(),
   json: jest.fn(),
+  render: jest.fn(),
 };
 
 let reviewsController = new ReiveswController();
@@ -38,6 +39,9 @@ describe('3계층 아키텍처 패턴 reivews 컨트롤러 단위 테스트', ()
     expect(mockResponse.status).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledWith(201); // status 값이 201 이면 통과
 
-    expect(mockResponse.json).toHaveBeenCalledWith(reviewsReturnValue.msg);
+    expect(mockResponse.render).toHaveBeenCalledWith(
+      'order-list',
+      reviewsReturnValue.msg
+    );
   });
 });
