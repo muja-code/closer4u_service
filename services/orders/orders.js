@@ -1,4 +1,3 @@
-
 const OrdersRepository = require('../../repositories/orders/orders');
 const { Order, Review, User } = require('../../models');
 const dateFormat = require('../../utills/date');
@@ -52,10 +51,19 @@ class OrdersService {
         throw new Error('Order Error');
       }
 
-      for (let order of orders) {
-        order.date = dateFormat(order.createdAt);
-      }
-      return orders;
+      return orders.map((order) => {
+        return {
+          id: order.id,
+          nickname: order.nickname,
+          phone: order.phone,
+          address: order.address,
+          image: order.image,
+          status: order.status,
+          requested: order.requested,
+          date: dateFormat(order.createdAt),
+          review: order.Reviews,
+        };
+      });
     } catch (error) {
       console.log(error);
       return error;
@@ -106,8 +114,6 @@ class OrdersService {
     }
   };
 
-
-
   findAllOrder = async () => {
     try {
       // Repostiory 에게 데이터를 요청
@@ -127,12 +133,15 @@ class OrdersService {
       // 데이터 가공
       return allOrder.map((order) => {
         return {
+          id: order.id,
           nickname: order.nickname,
           phone: order.phone,
           address: order.address,
           image: order.image,
+          status: order.status,
           requested: order.requested,
-          createdAt: order.createdAt,
+          date: dateFormat(order.createdAt),
+          review: order.Reviews,
         };
       });
     } catch (error) {
@@ -140,10 +149,12 @@ class OrdersService {
       return error;
     }
   };
-  createOrder = async (nickname, phone, address, image, requested) => {
+  createOrder = async (userId, nickname, phone, address, image, requested) => {
     try {
+      console.log('테스트1');
       // Repostiory 에게 데이터를 요청
       const createOrderData = await this.ordersRepository.createOrder(
+        userId,
         nickname,
         phone,
         address,

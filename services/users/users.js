@@ -21,8 +21,11 @@ class UserService {
     const validatePassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{5,10}/gs; // 숫자, 영어 대소문자, 특수문자 각 1글자 이상 포함, 5~10글자, 글자 중간 공백 불가
     let point = 0;
     try {
-      if (member === 0) {
+      console.log('111122222', member, point);
+      if (member === '0') {
+        console.log('1111', member, point);
         point = 1000000;
+        console.log('2222', member, point);
       }
       const duplicateUser = await User.findAll({
         where: {

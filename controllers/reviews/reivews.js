@@ -6,22 +6,24 @@ class ReviewsController {
   // 리뷰 작성
   createReivews = async (req, res, next) => {
     try {
+      console.log;
       const { mark, comment } = req.body;
-
+      const { orderId } = req.params;
+      const { userId } = req.userInfo;
+      console.log(mark, comment, orderId);
       const createReivewData = await this.reivewsService.createReivew(
+        userId,
+        orderId,
         mark,
         comment
       );
-
       if (createReivewData === 400) {
         return res.status(400).json({
           // message: '요청이 올바르지 않습니다.',
         });
       } // 로그인 쿠키 없을 경우 throw 403
       // res.redirect('/order-list');
-      res.status(201).render('order-list', {
-        message: '리뷰작성을 성공했습니다.',
-      });
+      res.status(201).redirect('/api/orders/customers');
       // res.status(201).json({
       //   // data: createReivewData,
       //   message: '리뷰작성을 성공했습니다.',

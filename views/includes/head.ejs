@@ -39,6 +39,8 @@
 
     .logo {
       font-size: 18px;
+      display: flex;
+      flex-direction: row;
     }
 
     main {
@@ -93,12 +95,13 @@
 <body>
   <header>
     <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/4666/4666057.png" alt="" style="width: 50px;">
       <h1>가까운4이 세탁서비스</h1>
     </div>
     <div class="buttons">
       <% try { %>
         <% if (userId && member===0) { %>
-          <button type="button" class="btn btn-secondary"><a href="">주문신청</a></button>
+          <button type="button" class="btn btn-secondary"><a href="/order_page">주문신청</a></button>
           <button type="button" class="btn btn-secondary"><a href="/api/orders/business">주문신청내역</a></button>
           <button type="button" class="btn btn-secondary"><a href="/api/orders/customers">주문접수내역</a></button>
           <button type="button" class="btn btn-dark logout">로그아웃</button>

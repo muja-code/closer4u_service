@@ -16,7 +16,6 @@ class UsersController {
         address,
       } = req.body;
 
-      console.log(member, account_id, password, nickname, phone, address);
       const user = await this.userService.signupUser(
         member,
         account_id,
