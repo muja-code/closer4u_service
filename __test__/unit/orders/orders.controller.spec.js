@@ -12,6 +12,7 @@ let mockRequest = {
 let mockResponse = {
   status: jest.fn(),
   json: jest.fn(),
+  render: jest.fn(),
 };
 
 let ordersController = new OrdersController();
@@ -64,7 +65,10 @@ describe('3계층 아키텍처 패턴 orders 컨트롤러 unit 테스트', () =>
     expect(mockResponse.status).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledWith(201);
 
-    expect(mockResponse.json).toHaveBeenCalledWith(ordersReturnValue.msg);
+    expect(mockResponse.render).toHaveBeenCalledWith(
+      'order-list',
+      ordersReturnValue.msg
+    );
   });
 
   test('orders 컨트롤러의 getOrders Method 실패', async () => {

@@ -19,10 +19,13 @@ class ReviewsController {
         });
       } // 로그인 쿠키 없을 경우 throw 403
       // res.redirect('/order-list');
-      res.status(201).json({
-        // data: createReivewData,
+      res.status(201).render('order-list', {
         message: '리뷰작성을 성공했습니다.',
       });
+      // res.status(201).json({
+      //   // data: createReivewData,
+      //   message: '리뷰작성을 성공했습니다.',
+      // });
     } catch (error) {
       if (error === 400) {
         res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });

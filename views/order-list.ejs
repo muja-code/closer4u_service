@@ -1,30 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>가까운4이 세탁서비스</title>
-  </head>
+<%- include('includes/head.ejs') %>
+  <main>
+    <h2>주문접수내역</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">세탁물 사진</th>
+          <th scope="col">신청일자</th>
+          <th scope="col">닉네임</th>
+          <th scope="col">배송지</th>
+          <th scope="col">요청사항</th>
+          <th scope="col">주문상태</th>
+          <th scope="col">리뷰</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let data of datas) { %>
+          <tr>
+            <th scope="row">
+              <img src="<%= data.image%>">
+            </th>
+            <td>
+              <%= data.date%>
+            </td>
+            <td>
+              <%= data.nickname%>
+            </td>
+            <td>
+              <%= data.address%>
+            </td>
+            <td>
+              <%= data.requested%>
+            </td>
+            <td>
+              <% if (member===1) { %>
+                <% switch (data.status) { case 1: %>
+                  <button type="button" class="btn btn-secondary status-change" value="<%= data.id %>">수거 중</button>
+                  <% break; case 2: %>
+                    <button type="button" class="btn btn-secondary status-change" value="<%= data.id %>">수거 완료</button>
+                    <% break; case 3: %>
+                      <button type="button" class="btn btn-secondary status-change" value="<%= data.id %>">배송 중</button>
+                      <% break; case 4: %>
+                        <button type="button" class="btn btn-secondary status-change" value="<%= data.id %>">배송
+                          완료</button>
+                        <% break; default: break; } %>
+                          <% } else { %>
+                            <% switch (data.status) { case 1: %>
+                              <button type="button" class="btn btn-secondary status-change" disabled
+                                value="<%= data.id %>">수거
+                                중</button>
+                              <% break; case 2: %>
+                                <button type="button" class="btn btn-secondary status-change" disabled
+                                  value="<%= data.id %>">수거
+                                  완료</button>
+                                <% break; case 3: %>
+                                  <button type="button" class="btn btn-secondary status-change" disabled
+                                    value="<%= data.id %>">배송 중</button>
+                                  <% break; case 4: %>
+                                    <button type="button" class="btn btn-secondary status-change" disabled
+                                      value="<%= data.id %>">배송
+                                      완료</button>
+                                    <% break; default: break; } %>
+                                      <% } %>
+            </td>
+            <td>
+              <% if (data.Reviews[0]) { %>
+                <%= "⭐" .repeat(data.Reviews[0].mark) %><br>
+                  <%= data.Reviews[0].comment %>
+                    <% } else { %>
+                      <% if (member===0 && data.status===4) { %>
+                        <button type="button" class="btn btn-secondary order-accept <%= userId%>"
+                          value="<%= data.id %>">리뷰
+                          작성</button>
 
-  <body>
-    <header>
-      <div class="logo">
-        <img src="x" />
-        <h1>가까운4이 세탁서비스</h1>
-      </div>
-
-      <div class="buttons">
-        <button><a href="/order">주문신청</a></button>
-        <button><a href="/order-list">주문내역</a></button>
-        <button><a href="">로그인</a></button>
-        <button><a href="">회원가입</a></button>
-        <button><a href="">로그아웃</a></button>
-        <button><a href="/api/users">마이페이지</a></button>
-      </div>
-      <hr />
-
-      <main></main>
-    </header>
+                        <% } else { %>
+                          <button type="button" class="btn btn-secondary order-accept <%= userId%>" disabled
+                            value="<%= data.id %>">리뷰
+                            작성</button>
+                          <% } %>
+                            <%}%>
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+  </main>
   </body>
-</html>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const accept_btn = document.getElementsByClassName('status-change');
+      for (let i = 0; i < accept_btn.length; i++) {
+        accept_btn[i].addEventListener('click', () => {
+          const orderId = accept_btn[i].value
+          console.log('/api/orders/' + orderId)
+          axios({
+            method: 'put',
+            url: '/api/orders/' + orderId,
+            data: {}
+          }).then((response) => {
+            console.log(response.status);
+            window.location.href = '/api/orders'
+          }).catch((response) => {
+            console.log(response.errorMessage);
+            window.location.href = '/api/orders'
+          })
+        })
+      }
+    })
+  </script>
+
+  </html>
