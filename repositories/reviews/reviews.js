@@ -1,14 +1,14 @@
-class ReivewsRepository {
-  constructor(reivewsModel) {
-    this.reivewsModel = reivewsModel;
+class ReviewsRepository {
+  constructor(reviewsModel) {
+    this.reviewsModel = reviewsModel;
   }
 
   // 리뷰 작성
-  createReivew = async (userId, orderId, mark, comment) => {
+  createReview = async (userId, orderId, mark, comment) => {
     try {
       console.log(userId, orderId);
-      // sequelize 에서 Reivews 모델의 create 메소드를 사용해 데이터 요청
-      const createRievewData = await this.reivewsModel.create({
+      // sequelize 에서 Reviews 모델의 create 메소드를 사용해 데이터 요청
+      const createRievewData = await this.reviewsModel.create({
         user_id: userId,
         order_id: orderId,
         mark,
@@ -21,10 +21,10 @@ class ReivewsRepository {
 
       return createRievewData;
     } catch (error) {
-      console.log('ReivewsRepositoryCreateReivewError :', error.message);
+      console.log('ReviewsRepositoryCreateReviewError :', error.message);
       return 400;
     }
   };
 }
 
-module.exports = ReivewsRepository;
+module.exports = ReviewsRepository;

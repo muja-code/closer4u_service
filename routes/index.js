@@ -7,6 +7,6 @@ const reviewsRouter = require('./reviews/reivews');
 
 router.use('/users', usersRouter);
 router.use('/orders', ordersRouter);
-router.use('/orders/reivews', reviewsRouter);
+router.use('/orders/reviews', reviewsRouter);
 
 module.exports = router;

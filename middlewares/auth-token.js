@@ -40,7 +40,7 @@ const authToken = (req, res, next) => {
 
   function validateAccessToken(accessToken) {
     try {
-      jwt.verify(accessToken, process.env.ACCESS_JWT_SECRET_KET); // JWT를 검증합니다.
+      jwt.verify(accessToken, process.env.ACCESS_JWT_SECRET_KET);
       return true;
     } catch (error) {
       return false;
@@ -50,7 +50,7 @@ const authToken = (req, res, next) => {
   // Refresh Token을 검증합니다.
   function validateRefreshToken(refreshToken) {
     try {
-      jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET_KET); // JWT를 검증합니다.
+      jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET_KET);
       return true;
     } catch (error) {
       return false;
