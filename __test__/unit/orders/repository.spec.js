@@ -1,4 +1,4 @@
-const OrdersRepository = require('../../../repositories/orders/orders');
+const OrdersRepository = require("../../../repositories/orders/orders");
 
 let mockOrderModel = {
   findAll: jest.fn(),
@@ -14,7 +14,7 @@ let mockUserModel = {
 
 let [mockUserId, mockOrderId, mockStatus] = [1, 1, 1];
 
-let mockError = new Error('mock Error');
+let mockError = new Error("mock Error");
 
 let ordersRepository = new OrdersRepository(
   mockOrderModel,
@@ -22,32 +22,32 @@ let ordersRepository = new OrdersRepository(
   mockUserModel
 );
 
-describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', () => {
+describe("3계층 아키텍처 패턴 orders 리포지토리 unit 테스트", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  test('orders 리포지토리 getOrderRequests Method 성공', async () => {
+  test("orders 리포지토리 getOrderRequests Method 성공", async () => {
     const ordersReturnValue = [
       {
         id: 1,
-        nickname: 'test1',
-        phone: 'test1',
-        address: 'test1',
-        requested: 'test1',
-        status: 'test1',
-        image: 'test1',
-        createdAt: 'test1',
+        nickname: "test1",
+        phone: "test1",
+        address: "test1",
+        requested: "test1",
+        status: "test1",
+        image: "test1",
+        createdAt: "test1",
       },
       {
         id: 2,
-        nickname: 'test2',
-        phone: 'test2',
-        address: 'test2',
-        requested: 'test2',
-        status: 'test2',
-        image: 'test2',
-        createdAt: 'test2',
+        nickname: "test2",
+        phone: "test2",
+        address: "test2",
+        requested: "test2",
+        status: "test2",
+        image: "test2",
+        createdAt: "test2",
       },
     ];
 
@@ -59,36 +59,36 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(orders).toEqual(ordersReturnValue);
   });
 
-  test('orders 리포지토리 getCompanyOrders Method 성공', async () => {
+  test("orders 리포지토리 getCompanyOrders Method 성공", async () => {
     const ordersReturnValue = [
       {
         id: 1,
-        nickname: 'nickname1',
+        nickname: "nickname1",
         phone: 123456,
-        address: 'address1',
-        requested: 'requested1',
+        address: "address1",
+        requested: "requested1",
         status: 0,
         image: null,
         createdAt: new Date(),
         Reviews: [
           {
-            comment: 'comment',
+            comment: "comment",
             mark: 4,
           },
         ],
       },
       {
         id: 2,
-        nickname: 'nickname2',
+        nickname: "nickname2",
         phone: 123456,
-        address: 'address2',
-        requested: 'requested2',
+        address: "address2",
+        requested: "requested2",
         status: 0,
         image: null,
         createdAt: new Date(),
         Reviews: [
           {
-            comment: 'comment',
+            comment: "comment",
             mark: 4,
           },
         ],
@@ -103,19 +103,19 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(orders).toEqual(ordersReturnValue);
   });
 
-  test('orders 리포지토리 getOrder Method 성공', async () => {
+  test("orders 리포지토리 getOrder Method 성공", async () => {
     const orderReturnValue = {
       id: 1,
-      nickname: 'nickname1',
+      nickname: "nickname1",
       phone: 123456,
-      address: 'address1',
-      requested: 'requested1',
+      address: "address1",
+      requested: "requested1",
       status: 0,
       image: null,
       createdAt: new Date(),
       Reviews: [
         {
-          comment: 'comment',
+          comment: "comment",
           mark: 4,
         },
       ],
@@ -129,7 +129,7 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(order).toEqual(orderReturnValue);
   });
 
-  test('orders 리포지토리 acceptRequest Method 성공', async () => {
+  test("orders 리포지토리 acceptRequest Method 성공", async () => {
     const orderReturnValue = undefined;
 
     ordersRepository.orderModel.update = jest.fn(() => orderReturnValue);
@@ -142,7 +142,7 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(order).toEqual(orderReturnValue);
   });
 
-  test('orders 리포지토리 changeStatus Method 성공', async () => {
+  test("orders 리포지토리 changeStatus Method 성공", async () => {
     const orderReturnValue = undefined;
     ordersRepository.orderModel.update = jest.fn(() => orderReturnValue);
 
@@ -152,11 +152,11 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(order).toEqual(orderReturnValue);
   });
 
-  test('orders 리포지토리 getOrderRequests Method 실패', async () => {
+  test("orders 리포지토리 getOrderRequests Method 실패", async () => {
     const ordersReturnValue = mockError;
 
     ordersRepository.orderModel.findAll.mockReturnValue(
-      new Error('mock Error')
+      new Error("mock Error")
     );
 
     const orders = await ordersRepository.getOrderRequests();
@@ -165,36 +165,36 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(orders).toEqual(ordersReturnValue);
   });
 
-  test('orders 리포지토리 getCompanyOrders Method 실패', async () => {
+  test("orders 리포지토리 getCompanyOrders Method 실패", async () => {
     const ordersReturnValue = [
       {
         id: 1,
-        nickname: 'nickname1',
+        nickname: "nickname1",
         phone: 123456,
-        address: 'address1',
-        requested: 'requested1',
+        address: "address1",
+        requested: "requested1",
         status: 0,
         image: null,
         createdAt: new Date(),
         Reviews: [
           {
-            comment: 'comment',
+            comment: "comment",
             mark: 4,
           },
         ],
       },
       {
         id: 2,
-        nickname: 'nickname2',
+        nickname: "nickname2",
         phone: 123456,
-        address: 'address2',
-        requested: 'requested2',
+        address: "address2",
+        requested: "requested2",
         status: 0,
         image: null,
         createdAt: new Date(),
         Reviews: [
           {
-            comment: 'comment',
+            comment: "comment",
             mark: 4,
           },
         ],
@@ -209,19 +209,19 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(orders).toEqual(ordersReturnValue);
   });
 
-  test('orders 리포지토리 getOrder Method 실패', async () => {
+  test("orders 리포지토리 getOrder Method 실패", async () => {
     const orderReturnValue = {
       id: 1,
-      nickname: 'nickname1',
+      nickname: "nickname1",
       phone: 123456,
-      address: 'address1',
-      requested: 'requested1',
+      address: "address1",
+      requested: "requested1",
       status: 0,
       image: null,
       createdAt: new Date(),
       Reviews: [
         {
-          comment: 'comment',
+          comment: "comment",
           mark: 4,
         },
       ],
@@ -235,7 +235,7 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(order).toEqual(orderReturnValue);
   });
 
-  test('orders 리포지토리 acceptRequest Method 실패', async () => {
+  test("orders 리포지토리 acceptRequest Method 실패", async () => {
     const orderReturnValue = undefined;
     ordersRepository.orderModel.update = jest.fn(() => orderReturnValue);
 
@@ -245,7 +245,7 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(order).toEqual(orderReturnValue);
   });
 
-  test('orders 리포지토리 changeStatus Method 실패', async () => {
+  test("orders 리포지토리 changeStatus Method 실패", async () => {
     const orderReturnValue = undefined;
     ordersRepository.orderModel.update = jest.fn(() => orderReturnValue);
 
@@ -254,4 +254,44 @@ describe('3계층 아키텍처 패턴 orders 리포지토리 unit 테스트', ()
     expect(ordersRepository.orderModel.update).toHaveBeenCalledTimes(1);
     expect(order).toEqual(orderReturnValue);
   });
+});
+
+// ----------------------------------------------------------------
+
+test("orders 리포지토리 findAllOrder Method 성공", async () => {
+  const ordersReturnValue = [
+    {
+      nickname: "nickname1",
+      phone: 1,
+      address: "address1",
+      image: "image1",
+      requested: "requested1",
+      createdAt: new Date(),
+    },
+  ];
+
+  mockOrderModel.findAll = jest.fn(() => ordersReturnValue);
+
+  await ordersRepository.findAllOrder();
+
+  expect(mockOrderModel.findAll).toHaveBeenCalledTimes(1);
+});
+
+test("orders 리포지토리 createOrder Method 성공", async () => {
+  const ordersReturnValue = [
+    {
+      nickname: "nickname1",
+      phone: 1,
+      address: "address1",
+      image: "image1",
+      requested: "requested1",
+      createdAt: new Date(),
+    },
+  ];
+
+  mockOrderModel.create = jest.fn(() => ordersReturnValue);
+
+  await ordersRepository.createOrder();
+
+  expect(mockOrderModel.create).toHaveBeenCalledTimes(1);
 });
