@@ -49,40 +49,46 @@
                               <button type="button" class="btn btn-secondary status-change" disabled
                                 value="<%= data.id %>">배송
                                 완료</button>
-                              <% break; default: break; } %>
-                                <% } else { %>
-                                  <% switch (data.status) { case 1: %>
-                                    <button type="button" class="btn btn-secondary status-change" disabled
-                                      value="<%= data.id %>">수거
-                                      중</button>
-                                    <% break; case 2: %>
+                              <% break; default: %>
+                                <button type="button" class="btn btn-secondary status-change" disabled
+                                  value="<%= data.id %>">대기 중</button>
+                                <%break; } %>
+                                  <% } else { %>
+                                    <% switch (data.status) { case 1: %>
                                       <button type="button" class="btn btn-secondary status-change" disabled
                                         value="<%= data.id %>">수거
-                                        완료</button>
-                                      <% break; case 3: %>
+                                        중</button>
+                                      <% break; case 2: %>
                                         <button type="button" class="btn btn-secondary status-change" disabled
-                                          value="<%= data.id %>">배송 중</button>
-                                        <% break; case 4: %>
+                                          value="<%= data.id %>">수거
+                                          완료</button>
+                                        <% break; case 3: %>
                                           <button type="button" class="btn btn-secondary status-change" disabled
-                                            value="<%= data.id %>">배송
-                                            완료</button>
-                                          <% break; default: break; } %>
-                                            <% } %>
+                                            value="<%= data.id %>">배송 중</button>
+                                          <% break; case 4: %>
+                                            <button type="button" class="btn btn-secondary status-change" disabled
+                                              value="<%= data.id %>">배송
+                                              완료</button>
+                                            <% break; default: %>
+                                              <button type="button" class="btn btn-secondary status-change" disabled
+                                                value="<%= data.id %>">대기 중</button>
+                                              <%break; } %>
+                                                <% } %>
                   </td>
                   <td class="review">
-                    <% if (data.Reviews[0]) { %>
-                      <%= "⭐" .repeat(data.Reviews[0].mark) %><br>
-                        <%= data.Reviews[0].comment %>
+                    <% if (data.review[0]) { %>
+                      <%= "⭐" .repeat(data.review[0].mark) %><br>
+                        <%= data.review[0].comment %>
                           <% } else { %>
                             <% if (member===0 && data.status===4) { %>
-                              <button type="button" class="btn btn-secondary order-accept <%= userId%>"
-                                value="<%= data.id %>">리뷰
-                                작성</button>
+                              <button type="button" class="btn btn-secondary review-button <%= userId%>"
+                                value="<%= data.id %>"><a href="/review_page/<%= data.id %>">리뷰
+                                  작성</a></button>
 
                               <% } else { %>
-                                <button type="button" class="btn btn-secondary order-accept <%= userId%>" disabled
-                                  value="<%= data.id %>">리뷰
-                                  작성</button>
+                                <button type="button" class="btn btn-secondary review-buttont <%= userId%>" disabled
+                                  value="<%= data.id %>"><a href="/review_page/<%= data.id %>">리뷰
+                                    작성</a></button>
                                 <% } %>
                                   <%}%>
                   </td>
@@ -100,6 +106,7 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const accept_btn = document.getElementsByClassName('status-change');
+      const review_btn = document.getElementsByClassName('review-button');
       for (let i = 0; i < accept_btn.length; i++) {
         accept_btn[i].addEventListener('click', () => {
           const orderId = accept_btn[i].value

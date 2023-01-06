@@ -4,6 +4,56 @@ require('dotenv').config();
 class UsersController {
   userService = new UserService();
 
+  signupUser = async (req, res, next) => {
+    try {
+      const {
+        member,
+        account_id,
+        password,
+        check_password,
+        nickname,
+        phone,
+        address,
+      } = req.body;
+
+      const user = await this.userService.signupUser(
+        member,
+        account_id,
+        password,
+        check_password,
+        nickname,
+        phone,
+        address
+      );
+      if (typeof user.message !== 'undefined') {
+        return res.status(400).json({ errorMessage: user.message });
+      }
+      // res.status(200).json({ data: user });
+      res.status(201).redirect('/login_page');
+    } catch (error) {
+      console.log('signup error - controller');
+      res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
+    }
+  };
+  getUser = async (req, res, next) => {
+    try {
+      const { userId } = req.userInfo;
+      const user = await this.userService.findUser(userId);
+      if (typeof user.message !== 'undefined') {
+        return res
+          .status(400)
+          .json({ errorMessage: '요청이 올바르지 않습니다.' });
+      }
+      res.status(200).render('mypage', {
+        data: user,
+        userId: user.id,
+        member: user.member,
+      });
+    } catch (error) {
+      res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
+    }
+  };
+
   getUser = async (req, res, next) => {
     try {
       const { userId } = req.userInfo;

@@ -27,7 +27,6 @@ function dateFormat(date) {
     '시' +
     Single_digit_check(date.getMinutes()) +
     '분';
-
   // 만든 날짜의 문자열을 반환해준다
   return dateFormat;
 }
