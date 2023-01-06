@@ -1,23 +1,23 @@
-const ReviewsService = require('../../services/reviews/reviews.js');
+const ReviewsService = require('../../services/reviews/reviews');
 
 class ReviewsController {
-  reivewsService = new ReviewsService();
+  reviewsService = new ReviewsService();
 
   // 리뷰 작성
-  createReivews = async (req, res, next) => {
+  createReviews = async (req, res, next) => {
     try {
       console.log;
       const { mark, comment } = req.body;
       const { orderId } = req.params;
       const { userId } = req.userInfo;
       console.log(mark, comment, orderId);
-      const createReivewData = await this.reivewsService.createReivew(
+      const createReviewData = await this.reviewsService.createReview(
         userId,
         orderId,
         mark,
         comment
       );
-      if (createReivewData === 400) {
+      if (createReviewData === 400) {
         return res.status(400).json({
           // message: '요청이 올바르지 않습니다.',
         });
@@ -25,7 +25,7 @@ class ReviewsController {
       // res.redirect('/order-list');
       res.status(201).redirect('/api/orders/customers');
       // res.status(201).json({
-      //   // data: createReivewData,
+      //   // data: createReviewData,
       //   message: '리뷰작성을 성공했습니다.',
       // });
     } catch (error) {

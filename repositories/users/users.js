@@ -22,6 +22,7 @@ class UserRepository {
         address,
         point,
       });
+
       return user;
     } catch (error) {
       console.log('signup error - repository');

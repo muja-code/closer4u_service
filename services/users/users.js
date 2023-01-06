@@ -56,6 +56,7 @@ class UserService {
           [Op.or]: [{ account_id }, { nickname }],
         },
       });
+
       if (duplicateUser.length) {
         return {
           code: 400,
@@ -77,7 +78,7 @@ class UserService {
         Message: '회원가입에 성공하셨습니다.',
       };
     } catch (error) {
-      console.log(error);
+      console.log('signup : ', error);
       console.log('signup error - service');
       return {
         code: 400,
@@ -107,7 +108,7 @@ class UserService {
       const check = await bcrypt.compare(password, userInfo.password);
 
       if (!check) {
-        return new Error('Password Error');
+        throw new Error('Password Error');
       }
 
       const accessToken = jwt.sign(

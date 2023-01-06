@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "test:unit": "jest __test__/unit/* --forceExit",
+    "test:unit:silent": "jest __test__/unit/* --silent --forceExit",
     "test:unit:coverage": "jest __test__/unit/* --coverage --forceExit",
     "test:integration": "jest __test__/integration --forceExit",
     "test:integration:coverage": "jest __test__/integration --coverage --forceExit"

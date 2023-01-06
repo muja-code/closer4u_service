@@ -5,6 +5,7 @@ const saltRounds = 10;
 let mockUserRepository = {
   findUser: jest.fn(),
   loginUser: jest.fn(),
+  createUser: jest.fn(),
 };
 
 let mockUserId = 1;
@@ -86,4 +87,83 @@ describe('3계층 아키텍처 패턴 users 서비스 unit 테스트', () => {
     expect(mockUserRepository.loginUser).toHaveBeenCalledTimes(1);
     expect(user).toEqual(returnError);
   });
+
+  test.each([
+    {
+      member: '0',
+      account_id: 'te',
+      password: 'Test1@',
+      check_password: 'Test1@',
+      nickname: 'test',
+      phone: '01012345678',
+      address: 'test',
+    },
+    {
+      member: '0',
+      account_id: 'test1',
+      password: 'test1',
+      check_password: 'test1',
+      nickname: 'test1',
+      phone: '01012345678',
+      address: 'test',
+    },
+    {
+      member: '0',
+      account_id: 'test1',
+      password: 'Test1@',
+      check_password: 'Test1@@',
+      nickname: 'test1',
+      phone: '01012345678',
+      address: 'test',
+    },
+    {
+      member: '0',
+      account_id: 'test1',
+      password: 'Test1@',
+      check_password: 'Test1@',
+      nickname: '',
+      phone: '01012345678',
+      address: 'test',
+    },
+    {
+      member: '0',
+      account_id: 'test1',
+      password: 'Test1@',
+      check_password: 'Test1@',
+      nickname: 'test1',
+      phone: '',
+      address: 'test',
+    },
+    {
+      member: '0',
+      account_id: 'test1',
+      password: 'Test1@',
+      check_password: 'Test1@',
+      nickname: 'test1',
+      phone: '01012345678',
+      address: '',
+    },
+  ])(
+    'users 서비스의 signupUser 회원가입 유효성 검사',
+    async ({
+      member,
+      account_id,
+      password,
+      check_password,
+      nickname,
+      phone,
+      address,
+    }) => {
+      const signupResult = await userService.signupUser(
+        member,
+        account_id,
+        password,
+        check_password,
+        nickname,
+        phone,
+        address
+      );
+      expect(signupResult.errorMessage).toBeDefined();
+    }
+  );
 });

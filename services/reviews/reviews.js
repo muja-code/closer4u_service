@@ -1,19 +1,19 @@
-const ReivewsRepository = require('../../repositories/reviews/reviews.js');
+const ReviewsRepository = require('../../repositories/reviews/reviews.js');
 const { Review } = require('../../models');
 
-class ReivewsService {
-  reivewsRepository = new ReivewsRepository(Review);
+class ReviewsService {
+  reviewsRepository = new ReviewsRepository(Review);
 
-  createReivew = async (userId, orderId, mark, comment) => {
+  createReview = async (userId, orderId, mark, comment) => {
     try {
       // Repository 에게 데이터를 요청
-      const createReivewData = await this.reivewsRepository.createReivew(
+      const createReviewData = await this.reviewsRepository.createReview(
         userId,
         orderId,
         mark,
         comment
       );
-      if (createReivewData === 400) {
+      if (createReviewData === 400) {
         throw 400;
       }
 
@@ -21,14 +21,14 @@ class ReivewsService {
 
       // 데이터 가공
       return {
-        mark: createReivewData.mark,
-        comment: createReivewData.comment,
+        mark: createReviewData.mark,
+        comment: createReviewData.comment,
       };
     } catch (error) {
-      console.log('ReivewsRepositoryCreateReivew :', error);
+      console.log('ReviewsRepositoryCreateReview :', error);
       return error;
     }
   };
 }
 
-module.exports = ReivewsService;
+module.exports = ReviewsService;
