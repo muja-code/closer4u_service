@@ -1,10 +1,12 @@
 const express = require('express');
+const { TokenExpiredError } = require('jsonwebtoken');
 const router = express.Router();
 
 const ReviewsController = require('../../controllers/reviews/reivews.js');
 const reviewsContorller = new ReviewsController();
+const authToken = require('../../middlewares/auth-token');
 
 // 리뷰 작성
-router.post('/', reviewsContorller.createReivews);
+router.post('/:orderId', authToken, reviewsContorller.createReivews);
 
 module.exports = router;

@@ -19,12 +19,13 @@ h1 {
   border: none;
   float: left;
   position: fixed;
-  margin-top: -23px;
-  margin-left: 40px;
+  margin-top: -73px;
+  margin-left: 55px;
 }
 
 .rating > input {
   display: none;
+  width: px;
 }
 .rating > label:before {
   margin: 5px;
@@ -53,8 +54,9 @@ h1 {
 }
 
 .comment > textarea {
-  margin-bottom: -20px;
+  margin-bottom: -13px;
   padding-top: 20px;
+  margin-left: 20px;
 }
 
 .sub_button {
