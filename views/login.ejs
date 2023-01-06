@@ -1,0 +1,17 @@
+<%- include('includes/head.ejs') %>
+  <main>
+    <form id="login" action="/api/users/login" method="post">
+      <div class="mb-3">
+        <label for="account-id" class="form-label">아이디</label>
+        <input type="text" class="form-control" id="account-id" name="userId" placeholder="아이디">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">비밀번호</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+      </div>
+      <button type="submit" class="btn btn-primary mb-3 login">로그인</button>
+    </form>
+  </main>
+  </body>
+
+  </html>

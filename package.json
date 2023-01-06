@@ -4,21 +4,31 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "test:unit": "jest __test__/unit/* --forceExit",
+    "test:unit:silent": "jest __test__/unit/* --silent --forceExit",
+    "test:unit:coverage": "jest __test__/unit/* --coverage --forceExit",
+    "test:integration": "jest __test__/integration --forceExit",
+    "test:integration:coverage": "jest __test__/integration --coverage --forceExit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.28.0"
   },
   "devDependencies": {
+    "jest": "^29.3.1",
     "nodemon": "^2.0.20",
-    "sequelize-cli": "^6.5.2"
+    "prettier": "^2.8.1",
+    "sequelize-cli": "^6.5.2",
+    "supertest": "^6.3.3"
   }
 }

@@ -1,0 +1,36 @@
+<%- include('includes/head.ejs') %>
+  <main>
+    <div>
+      <h1>리뷰 작성</h1>
+      <form action="/api/orders/reviews/<%= orderId %>" method="post">
+        <div>
+          <label>평점</label>
+          <div class="rating">
+            <input type="radio" id="star5" name="mark" value="5" /><label class="full" for="star5"
+              title="Awesome - 5 stars"></label>
+
+            <input type="radio" id="star4" name="mark" value="4" /><label class="full" for="star4"
+              title="Pretty good - 4 stars"></label>
+
+            <input type="radio" id="star3" name="mark" value="3" /><label class="full" for="star3"
+              title="Meh - 3 stars"></label>
+
+            <input type="radio" id="star2" name="mark" value="2" /><label class="full" for="star2"
+              title="Kinda bad - 2 stars"></label>
+
+            <input type="radio" id="star1" name="mark" value="1" required /><label class="full" for="star1"
+              title="Sucks big time - 1 star"></label>
+          </div>
+        </div>
+        <div class="comment">
+          <label>리뷰</label>
+          <textarea name="comment"></textarea>
+        </div>
+        <button type="submit" class="sub_button btn btn-primary" value="<%= orderId %>">작성하기</button>
+      </form>
+    </div>
+  </main>
+  </header>
+  </body>
+
+  </html>

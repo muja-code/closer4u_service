@@ -24,7 +24,7 @@ module.exports = {
         allowNull: false,
       },
       phone: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
       address: {
@@ -33,6 +33,12 @@ module.exports = {
       },
       point: {
         type: Sequelize.INTEGER,
+      },
+      member: {
+        type: Sequelize.INTEGER,
+
+        allowNull: false,
+
       },
       createdAt: {
         allowNull: false,
