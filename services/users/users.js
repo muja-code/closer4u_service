@@ -10,7 +10,7 @@ class UserService {
   userRepository = new UserRepository(User);
   signupUser = async (
     member,
-    account_id,
+    accountId,
     password,
     check_password,
     nickname,
@@ -24,7 +24,7 @@ class UserService {
       if (member === '0') {
         point = 1000000;
       }
-      if (!validateId.test(account_id)) {
+      if (!validateId.test(accountId)) {
         return {
           code: 400,
           errorMessage: '아이디가 작성 형식과 맞지 않습니다.',
@@ -53,7 +53,7 @@ class UserService {
       }
       const duplicateUser = await User.findAll({
         where: {
-          [Op.or]: [{ account_id }, { nickname }],
+          [Op.or]: [{ account_id: accountId }, { nickname }],
         },
       });
 
@@ -64,22 +64,18 @@ class UserService {
         };
       }
       const encryptPassword = await bcrypt.hash(password, saltRounds);
-      await this.userRepository.createUser(
+      const user = await this.userRepository.createUser(
         member,
-        account_id,
+        accountId,
         encryptPassword,
         nickname,
         phone,
         address,
         point
       );
-      return {
-        code: 201,
-        Message: '회원가입에 성공하셨습니다.',
-      };
+      return user;
     } catch (error) {
-      console.log('signup : ', error);
-      console.log('signup error - service');
+      console.log(error);
       return {
         code: 400,
         errorMessage: '요청이 올바르지 않습니다. - service',
@@ -115,7 +111,7 @@ class UserService {
         {
           type: 'JWT',
           userId: userInfo.id,
-          accountId: userInfo.account_id,
+          accountId: userInfo.accountId,
           member: userInfo.member,
         },
         process.env.ACCESS_JWT_SECRET_KET,
@@ -128,7 +124,7 @@ class UserService {
         {
           type: 'JWT',
           userId: userInfo.id,
-          accountId: userInfo.account_id,
+          accountId: userInfo.accountId,
           member: userInfo.member,
         },
         process.env.REFRESH_JWT_SECRET_KET,

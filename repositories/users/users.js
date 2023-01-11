@@ -5,7 +5,7 @@ class UserRepository {
 
   createUser = async (
     member,
-    account_id,
+    accountId,
     encryptPassword,
     nickname,
     phone,
@@ -15,7 +15,7 @@ class UserRepository {
     try {
       const user = await this.userModel.create({
         member,
-        account_id,
+        account_id: accountId,
         password: encryptPassword,
         nickname,
         phone,
@@ -25,7 +25,7 @@ class UserRepository {
 
       return user;
     } catch (error) {
-      console.log('signup error - repository');
+      console.log(error);
       return error;
     }
   };

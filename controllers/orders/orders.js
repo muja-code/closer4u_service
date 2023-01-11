@@ -1,4 +1,5 @@
 const OrdersService = require('../../services/orders/orders');
+const io = require('../../socket');
 
 class OrdersController {
   ordersService = new OrdersService();
@@ -26,7 +27,6 @@ class OrdersController {
   getOrders = async (req, res, next) => {
     try {
       const orders = await this.ordersService.findAllOrder();
-
       if (orders == '') {
         return res
           .status(400)
@@ -160,8 +160,11 @@ class OrdersController {
       //     errorMessage: '닉네임이 중복되었습니다.',
       //   });
       // }
-      res.status(201).redirect('/api/orders/customers');
 
+      io.getIO().on('connection', (socket) => {
+        io.getIO().emit('createOrder', createOrderData);
+      });
+      res.status(201).redirect('/api/orders/customers');
       // res.status(201).json({
       //   // data: createOrderData,
       //   message: '주문 신청이 완료되었습니다.',

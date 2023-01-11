@@ -1,32 +1,29 @@
 const express = require('express');
 const router = express.Router();
 
-const authToken = require('../middlewares/auth-token');
-
 router.get('/signup_page', (req, res) => {
   res.render('signup');
 });
 router.get('/login_page', (req, res) => {
   res.render('login');
 });
-router.get('/', (req, res) => {
-  res.render('order-requests');
+router.get('/order_create_page', (req, res) => {
+  res.render('order-create');
 });
-router.get('/order_page', (req, res) => {
-  res.render('order');
-});
-
-router.get('/order-list', (req, res) => {
+router.get('/order_list_page', (req, res) => {
   res.render('order-list');
 });
-
-router.get('/review_page/:orderId', authToken, (req, res) => {
-  const { orderId } = req.params;
-  res.render('review', {
-    orderId,
-    userId: req.userInfo.userId,
-    member: req.userInfo.member,
-  });
+router.get('/order_requests_page', (req, res) => {
+  res.render('order-requests');
+});
+router.get('/profile_page', (req, res) => {
+  res.render('profile');
+});
+router.get('/review_create_page', (req, res) => {
+  res.render('review-create');
+});
+router.get('/', (req, res) => {
+  res.render('index');
 });
 
 module.exports = router;

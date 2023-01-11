@@ -117,12 +117,10 @@
             data: {}
           }).then((response) => {
             console.log(response.status);
-
             window.location.href = '/api/orders/companies'
           }).catch((response) => {
             console.log(response.errorMessage);
             window.location.href = '/api/orders/business'
-
           })
         })
       }

@@ -7,19 +7,20 @@ require('dotenv').config();
 const router = require('./routes/index');
 const models = require('./models/index');
 const pageRouter = require('./routes/page');
+const socket = require('./socket');
 
 const env = process.env;
 const app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', 'view');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookie_parser());
 app.use('/api', router);
 app.use('/', pageRouter);
-app.use(express.static('static'));
+app.use(express.static('public'));
 
 // mysql 연결 상태 확인
 models.sequelize
@@ -32,8 +33,9 @@ models.sequelize
     console.log(err);
   });
 
-app.listen(env.PORT, () => {
+const server = app.listen(env.PORT, () => {
   console.log(env.PORT, '번 포트가 실행되었습니다.');
 });
+socket.init(server);
 
 module.exports = app;

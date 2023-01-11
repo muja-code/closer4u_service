@@ -8,7 +8,7 @@ class UsersController {
     try {
       const {
         member,
-        account_id,
+        accountId,
         password,
         check_password,
         nickname,
@@ -18,20 +18,21 @@ class UsersController {
 
       const user = await this.userService.signupUser(
         member,
-        account_id,
+        accountId,
         password,
         check_password,
         nickname,
         phone,
         address
       );
-      if (typeof user.message !== 'undefined') {
-        return res.status(400).json({ errorMessage: user.message });
+      if (typeof user.errorMessage !== 'undefined') {
+        return res.status(user.code).json({ errorMessage: user.errorMessage });
       }
-      // res.status(200).json({ data: user });
-      res.status(201).redirect('/login_page');
+      res
+        .status(201)
+        .json({ message: '회원가입에 성공하셨습니다.', data: user });
     } catch (error) {
-      console.log('signup error - controller');
+      console.log(error);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
