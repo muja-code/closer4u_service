@@ -2,36 +2,35 @@
   <main>
     <div>
       <h1>주문 신청 작성</h1>
-      <form action="/api/orders" method="post">
-        <div class="group">
-          <label>닉네임</label>
-          <input type="text" required name="nickname" />
-        </div>
+      <div class="group">
+        <label>닉네임</label>
+        <input id="nickname" type="text" required name="nickname" />
+      </div>
 
-        <div class="group">
-          <label>전화번호</label>
-          <input type="text" required name="phone" />
-        </div>
+      <div class="group">
+        <label>전화번호</label>
+        <input id="phone" type="text" required name="phone" />
+      </div>
 
-        <div class="group">
-          <label>배송지</label>
-          <input type="text" required name="address" />
-        </div>
+      <div class="group">
+        <label>배송지</label>
+        <input id="address" type="text" required name="address" />
+      </div>
 
-        <div class="group">
-          <label>세탁물 사진</label>
-          <input type="text" name="image" />
-        </div>
+      <div class="group">
+        <label>세탁물 사진</label>
+        <input id="image" type="text" name="image" />
+      </div>
 
-        <div class="group">
-          <label>세탁 요청사항</label>
-          <input type="text" name="requested" />
-        </div>
-        <button type="submit">신청하기</button>
-      </form>
+      <div class="group">
+        <label>세탁 요청사항</label>
+        <input id="requested" type="text" name="requested" />
+      </div>
+      <button id="orderCreateBtn">신청하기</button>
     </div>
   </main>
   </header>
   </body>
+  <script src="/js/orders/order_create.js"></script>
 
   </html>

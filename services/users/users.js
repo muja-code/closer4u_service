@@ -93,9 +93,9 @@ class UserService {
     }
   };
 
-  loginUser = async (userId, password) => {
+  loginUser = async (accountId, password) => {
     try {
-      const userInfo = await this.userRepository.loginUser(userId);
+      const userInfo = await this.userRepository.loginUser(accountId);
 
       if (!userInfo) {
         throw new Error('User Error');
@@ -116,24 +116,11 @@ class UserService {
         },
         process.env.ACCESS_JWT_SECRET_KET,
         {
-          expiresIn: '10m',
+          expiresIn: '1h',
         }
       );
 
-      const refreshToken = jwt.sign(
-        {
-          type: 'JWT',
-          userId: userInfo.id,
-          accountId: userInfo.accountId,
-          member: userInfo.member,
-        },
-        process.env.REFRESH_JWT_SECRET_KET,
-        {
-          expiresIn: '7d',
-        }
-      );
-
-      return [accessToken, refreshToken];
+      return accessToken;
     } catch (error) {
       console.log(error);
       return error;

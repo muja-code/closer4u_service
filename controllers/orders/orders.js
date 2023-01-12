@@ -6,17 +6,15 @@ class OrdersController {
 
   getOrderRequests = async (req, res, next) => {
     try {
+      const { userId, member } = req.userInfo;
+
       const orders = await this.ordersService.getOrderRequests();
 
       if (typeof orders.message !== 'undefined') {
         throw orders;
       }
 
-      res.status(200).render('order-requests', {
-        datas: orders,
-        userId: req.userInfo.userId,
-        member: req.userInfo.member,
-      });
+      res.status(200).json({ datas: orders, userInfo: { userId, member } });
     } catch (error) {
       console.log(error);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
@@ -24,22 +22,18 @@ class OrdersController {
   };
 
   // 본인이 주문 신청한 내역 조회
-  getOrders = async (req, res, next) => {
+  getCustomerOrders = async (req, res, next) => {
     try {
-      const orders = await this.ordersService.findAllOrder();
+      const { userId } = req.userInfo;
+      const orders = await this.ordersService.findAllOrder(userId);
       if (orders == '') {
         return res
           .status(400)
           .json({ errorMessage: '요청이 올바르지 않습니다.' });
       }
-      // res.status(200).json({ data: orders });
-      res.status(200).render('order-list', {
-        datas: orders,
-        userId: req.userInfo.userId,
-        member: req.userInfo.member,
-      });
+      res.status(200).json({ datas: orders });
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
@@ -55,8 +49,6 @@ class OrdersController {
 
       res.status(200).render('order-list', {
         datas: orders,
-        userId: req.userInfo.userId,
-        member: req.userInfo.member,
       });
     } catch (error) {
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
@@ -128,6 +120,12 @@ class OrdersController {
       const { nickname, phone, address, image, requested } = req.body;
       const userId = req.userInfo.userId;
 
+      if (!nickname || !phone || !address || !image || !requested) {
+        return res.status(400).json({
+          errorMessage: '요청이 올바르지 않습니다.',
+        });
+      }
+
       const createOrderData = await this.ordersService.createOrder(
         userId,
         nickname,
@@ -137,47 +135,20 @@ class OrdersController {
         requested
       );
 
-      console.log('createOrderData : ', createOrderData);
-
-      if (!createOrderData) {
-        return res.status(400).json({
-          errorMessage: '요청이 올바르지 않습니다.',
-        });
+      if (typeof createOrderData.message !== 'undefined') {
+        throw createOrderData;
       }
-
-      if (createOrderData === 406) {
-        return res.status(406).json({
-          errorMessage: '닉네임이 중복되었습니다.',
-        });
-      }
-
-      // if (createOrderData === 400) {
-      //   return res.status(400).json({
-      //     errorMessage: '요청이 올바르지 않습니다.',
-      //   });
-      // } else if (createOrderData === 406) {
-      //   return res.status(406).json({
-      //     errorMessage: '닉네임이 중복되었습니다.',
-      //   });
-      // }
 
       io.getIO().on('connection', (socket) => {
         io.getIO().emit('createOrder', createOrderData);
       });
-      res.status(201).redirect('/api/orders/customers');
-      // res.status(201).json({
-      //   // data: createOrderData,
-      //   message: '주문 신청이 완료되었습니다.',
-      // });
+
+      res.status(201).json({
+        message: '주문 신청이 완료되었습니다.',
+      });
     } catch (error) {
-      if (error === 400) {
-        res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
-      } else if (error === 406) {
-        res.status(406).json({ errorMessage: '닉네임이 중복되었습니다.' });
-      }
-      // else {
-      //   res.status(500).json({ errorMessage: error.message });
-      // }
+      console.log(error);
+      res.status(400).json({ errorMessage: error.message });
     }
   };
 }

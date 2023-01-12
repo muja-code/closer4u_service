@@ -1,4 +1,7 @@
 const express = require('express');
+
+const loginCheck = require('../middlewares/login-check');
+
 const router = express.Router();
 
 router.get('/signup_page', (req, res) => {

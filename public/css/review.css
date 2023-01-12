@@ -77,3 +77,13 @@ h1 {
 .rating > input:checked ~ label:hover ~ label {
   color: #ffed85;
 }
+
+#user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#user > p {
+  margin-left: 30px;
+}

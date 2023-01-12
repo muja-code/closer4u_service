@@ -52,10 +52,10 @@ class UserRepository {
     }
   };
 
-  loginUser = async (userId) => {
+  loginUser = async (accountId) => {
     try {
       const user = await this.userModel.findOne({
-        where: { account_id: userId },
+        where: { account_id: accountId },
       });
 
       return user;

@@ -95,10 +95,10 @@ class OrdersService {
     }
   };
 
-  findAllOrder = async () => {
+  findAllOrder = async (userId) => {
     try {
       // Repostiory 에게 데이터를 요청
-      const allOrder = await this.ordersRepository.findAllOrder();
+      const allOrder = await this.ordersRepository.findAllOrder(userId);
 
       if (!allOrder) {
         return res.status(404).json({
@@ -132,8 +132,6 @@ class OrdersService {
   };
   createOrder = async (userId, nickname, phone, address, image, requested) => {
     try {
-      console.log('테스트1');
-      // Repostiory 에게 데이터를 요청
       const createOrderData = await this.ordersRepository.createOrder(
         userId,
         nickname,
@@ -143,25 +141,10 @@ class OrdersService {
         requested
       );
 
-      if (!createOrderData) {
-        return res.status(404).json({
-          message: '작성한 리뷰가 없습니다.',
-        });
+      if (typeof createOrderData.message !== 'undefined') {
+        throw createOrderData;
       }
 
-      // nickname 중복
-      if (createOrderData === 406) {
-        //이 응답은 서버가 서버 주도 콘텐츠 협상 을 수행한 이후, 사용자 에이전트에서 정해준 규격에 따른 어떠한 콘텐츠도 찾지 않았을 때, 웹서버가 보냅니다.
-        throw 406;
-      }
-
-      if (createOrderData === 400) {
-        throw 400;
-      }
-
-      // 로그인 쿠키 없을 경우 throw 403
-
-      // 데이터 가공
       return {
         nickname: createOrderData.nickname,
         phone: createOrderData.phone,
@@ -170,8 +153,7 @@ class OrdersService {
         requested: createOrderData.requested,
       };
     } catch (error) {
-      console.log('OrdersRepositoryCreateOrderError :', error.message);
-
+      console.log(error);
       return error;
     }
   };

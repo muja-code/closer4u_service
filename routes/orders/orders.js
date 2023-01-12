@@ -7,8 +7,7 @@ const router = express.Router();
 const ordersController = new OrdersController();
 
 router.get('/business', authToken, ordersController.getOrderRequests);
-// router.get('/customers', authToken, ordersController.getCustomerOrders);
-router.get('/customers', authToken, ordersController.getOrders);
+router.get('/customers', authToken, ordersController.getCustomerOrders);
 
 router.get('/companies', authToken, ordersController.getCompanyOrders);
 router.put('/accept/:orderId', authToken, ordersController.acceptRequest);

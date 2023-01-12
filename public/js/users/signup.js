@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const login = document.getElementById('login');
+  const signup = document.getElementById('login');
 
-  login.addEventListener('click', () => {
+  signup.addEventListener('click', () => {
     const member = document.getElementById('member').value;
     const accountId = document.getElementById('account_id').value;
     const password = document.getElementById('password').value;
@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = '/login_page';
       })
       .catch((response) => {
-        console.log(response);
-        window.location.href = '/signup_page';
+        const data = response.response.data;
+        console.log(data);
+        alert(data.errorMessage);
       });
   });
 });
