@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+const bodyBox = () => {
   const profile = document.getElementById('profile');
 
   axios({
@@ -25,4 +25,4 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(data);
       alert(data.errorMessage);
     });
-});
+};

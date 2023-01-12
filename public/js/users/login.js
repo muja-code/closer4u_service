@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+const bodyBox = () => {
   const login = document.getElementById('login');
 
   login.addEventListener('click', () => {
@@ -24,4 +24,4 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(data.errorMessage);
       });
   });
-});
+};
