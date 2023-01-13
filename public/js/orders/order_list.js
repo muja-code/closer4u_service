@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       tempHtml = `<tr>
                     <th scope="row">
-                      <img src="${image}">
+                      <img src="/images/${image}">
                     </th>
                     <td>
                       ${date}

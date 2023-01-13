@@ -117,6 +117,7 @@ class OrdersController {
   createOrders = async (req, res, next) => {
     try {
       const { nickname, phone, address, image, requested } = req.body;
+      console.log(image);
       const userId = req.userInfo.userId;
 
       if (!nickname || !phone || !address || !image || !requested) {
