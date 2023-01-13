@@ -31,6 +31,7 @@ class OrdersController {
           .status(400)
           .json({ errorMessage: '요청이 올바르지 않습니다.' });
       }
+
       res.status(200).json({ datas: orders });
     } catch (error) {
       console.log(error);
@@ -47,9 +48,7 @@ class OrdersController {
         throw orders;
       }
 
-      res.status(200).render('order-list', {
-        datas: orders,
-      });
+      res.status(200).json({ datas: orders });
     } catch (error) {
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }

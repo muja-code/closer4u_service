@@ -1,4 +1,5 @@
-const bodyBox = () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await headBox();
   const profile = document.getElementById('profile');
 
   axios({
@@ -25,4 +26,4 @@ const bodyBox = () => {
       console.log(data);
       alert(data.errorMessage);
     });
-};
+});

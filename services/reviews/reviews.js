@@ -13,19 +13,17 @@ class ReviewsService {
         mark,
         comment
       );
-      if (createReviewData === 400) {
-        throw 400;
+
+      if (typeof createReviewData.message !== 'undefined') {
+        return createReviewData;
       }
 
-      // 로그인 쿠키가 없을 경우 throw 403
-
-      // 데이터 가공
       return {
         mark: createReviewData.mark,
         comment: createReviewData.comment,
       };
     } catch (error) {
-      console.log('ReviewsRepositoryCreateReview :', error);
+      console.log(error);
       return error;
     }
   };

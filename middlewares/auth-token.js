@@ -16,10 +16,10 @@ const authToken = (req, res, next) => {
     req.userInfo = jwt.verify(accessToken, process.env.ACCESS_JWT_SECRET_KET);
     next();
   } catch (error) {
-    console.log(error);
-    res
-      .status(401)
-      .json({ code: 401, errorMessage: '로그인 후 이용 가능합니다.' });
+    console.log('로그인 ::', error);
+    res.send(
+      "<script>alert('로그인 후 이용 가능합니다.');location.href='/login_page';</script>"
+    );
   }
 
   function validateAccessToken(accessToken) {

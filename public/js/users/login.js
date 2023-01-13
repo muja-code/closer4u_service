@@ -1,4 +1,5 @@
-const bodyBox = () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await headBox();
   const login = document.getElementById('login');
 
   login.addEventListener('click', () => {
@@ -24,4 +25,4 @@ const bodyBox = () => {
         alert(data.errorMessage);
       });
   });
-};
+});

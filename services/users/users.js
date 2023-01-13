@@ -120,7 +120,7 @@ class UserService {
         }
       );
 
-      return accessToken;
+      return [accessToken, userInfo];
     } catch (error) {
       console.log(error);
       return error;

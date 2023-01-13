@@ -15,14 +15,10 @@ class ReviewsRepository {
         comment,
       });
 
-      if (!createRievewData.mark || !createRievewData.comment) {
-        return 400;
-      }
-
       return createRievewData;
     } catch (error) {
-      console.log('ReviewsRepositoryCreateReviewError :', error.message);
-      return 400;
+      console.log(error);
+      return error;
     }
   };
 }

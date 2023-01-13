@@ -77,8 +77,12 @@ class UsersController {
           return res.status(400).json({ errorMessage: '비밀번호가 틀립니다.' });
         }
       }
-
-      res.cookie('accessToken', user);
+      const [accessToken, userInfo] = user;
+      res.cookie(
+        'userInfo',
+        `${userInfo.account_id},${userInfo.member},${userInfo.nickname}`
+      );
+      res.cookie('accessToken', accessToken);
       res.status(200).json({ message: '로그인 성공' });
     } catch (error) {
       console.log(error);
@@ -96,6 +100,7 @@ class UsersController {
 
   logoutUser = (req, res, next) => {
     res.clearCookie('accessToken');
+    res.clearCookie('userInfo');
 
     res.status(200).json({ message: '로그아웃 성공' });
   };

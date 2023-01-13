@@ -1,5 +1,6 @@
-const bodyBox = () => {
-  const signup = document.getElementById('login');
+document.addEventListener('DOMContentLoaded', async () => {
+  await headBox();
+  const signup = document.getElementById('signup');
 
   signup.addEventListener('click', () => {
     const member = document.getElementById('member').value;
@@ -34,4 +35,4 @@ const bodyBox = () => {
         alert(data.errorMessage);
       });
   });
-};
+});

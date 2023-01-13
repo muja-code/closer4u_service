@@ -1,4 +1,5 @@
-const bodyBox = () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await headBox();
   const memberSpan = document.getElementById('member');
   const orderList = document.getElementById('orderList');
   const member = memberSpan.innerText;
@@ -8,14 +9,14 @@ const bodyBox = () => {
   } else {
     url = '/api/orders/customers';
   }
-  axios({
+  await axios({
     method: 'get',
     url: url,
     data: {},
   }).then((response) => {
+    console.log(response);
     const datas = response.data.datas;
     for (const data of datas) {
-      console.log(data);
       const { address, date, id, image, nickname, requested, review, status } =
         data;
       let showStatus = '';
@@ -41,31 +42,51 @@ const bodyBox = () => {
           break;
       }
 
-      if (member === 1) {
-        statusBtn = `<td id=statusBtns>
-                          <button type="button" class="btn btn-secondary order-accept" value="${status}">${showStatus}</button>
-                        </td>`;
-        reviewBtn = `<td id="review">
-                          <button type="button" class="btn btn-secondary review-button" value="${id}"><a href="/review_create_page">리뷰 작성</a></button>
-                        </td>`;
+      if (member === '1') {
+        if (status === 4) {
+          statusBtn = `<td id=statusBtns>
+          <button type="button" class="btn btn-secondary order-accept" disabled value="${id}">${showStatus}</button>
+        </td>`;
+          reviewBtn = `<td id="review">
+          <button type="button" class="btn btn-secondary reviewButton" disabled value="${id}"><a href="/review_create_page/${id}">리뷰
+          작성</a></button>
+        </td>`;
+        } else {
+          statusBtn = `<td id=statusBtns>
+          <button type="button" class="btn btn-secondary order-accept" value="${id}">${showStatus}</button>
+        </td>`;
+          reviewBtn = `<td id="review">
+          <button type="button" class="btn btn-secondary reviewButton" disabled value="${id}"><a href="/review_create_page/${id}">리뷰
+          작성</a></button>
+        </td>`;
+        }
       } else {
-        statusBtn = `<td id=statusBtns>
-                          <button type="button" class="btn btn-secondary order-accept" disabled value="${status}">${showStatus}</button>
+        if (status === 4) {
+          statusBtn = `<td id=statusBtns>
+                          <button type="button" class="btn btn-secondary order-accept" disabled value="${id}">${showStatus}</button>
                         </td>`;
-        reviewBtn = `<td id="review">
-                          <button type="button" class="btn btn-secondary review-buttont" disabled value="${id}"><a href="/review_create_page">리뷰
-                          작성</a></button>
+          reviewBtn = `<td id="review">
+                          <button type="button" class="btn btn-secondary reviewButton" value="${id}"><a href="/review_create_page/${id}">리뷰 작성</a></button>
                         </td>`;
+        } else {
+          statusBtn = `<td id=statusBtns>
+          <button type="button" class="btn btn-secondary order-accept" disabled value="${id}">${showStatus}</button>
+        </td>`;
+          reviewBtn = `<td id="review">
+          <button type="button" class="btn btn-secondary reviewButton" disabled value="${id}"><a href="/review_create_page/${id}">리뷰 작성</a></button>
+        </td>`;
+        }
       }
 
       if (review.length) {
         reviewBtn = `<td id="review">
-                          <p>${review[0].comment}</p>
                           <p>${'⭐'.repeat(review[0].mark)}</p>
+                          <p>${review[0].comment}</p>
                         </td>`;
       }
 
-      tempHtml = `<th scope="row">
+      tempHtml = `<tr>
+                    <th scope="row">
                       <img src="${image}">
                     </th>
                     <td>
@@ -81,8 +102,25 @@ const bodyBox = () => {
                       ${requested}
                     </td>
                     ${statusBtn}
-                    ${reviewBtn}`;
+                    ${reviewBtn}
+                  </tr>`;
       orderList.insertAdjacentHTML('beforeend', tempHtml);
     }
   });
-};
+
+  const orderAcceptBtns = document.getElementsByClassName('order-accept');
+  for (const orderAcceptBtn of orderAcceptBtns) {
+    orderAcceptBtn.addEventListener('click', () => {
+      const orderId = orderAcceptBtn.value;
+      axios({
+        method: 'put',
+        url: '/api/orders/' + orderId,
+        data: {},
+      }).then((response) => {
+        const data = response.data;
+        alert(data.message);
+        window.location.href = '/order_list_page';
+      });
+    });
+  }
+});

@@ -109,7 +109,6 @@ class OrdersRepository {
           attributes: ['comment', 'mark'],
         },
       });
-
       return orders;
     } catch (error) {
       // 추가로 쿠키에 로그인 정보 없을때 403

@@ -1,4 +1,5 @@
-const bodyBox = () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await headBox();
   const orderCreateBtn = document.getElementById('orderCreateBtn');
 
   orderCreateBtn.addEventListener('click', () => {
@@ -30,4 +31,4 @@ const bodyBox = () => {
         alert(data.errorMessage);
       });
   });
-};
+});
