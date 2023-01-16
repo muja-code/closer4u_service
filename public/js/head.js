@@ -4,14 +4,14 @@ const headBox = () => {
   const userInfo = convertCookieToObject(document.cookie);
   if (userInfo) {
     const { accountId, member, nickname } = userInfo.userInfo;
-    const userHtml = `<span id="userId" style="display: none;">${accountId}</span>
-                      <span id="member" style="display: none;">${member}</span>
+    const userHtml = `<span id="userId" style="display:none;">${accountId}</span>
+                      <span id="member" style="display:none;">${member}</span>
                       <p>${nickname}님</p>`;
     let tempHtml = ``;
     if (member === '1') {
-      tempHtml = `<button type="button" class="btn btn-info"><a href="/profile_page">마이페이지</a></button>
-                  <button type="button" class="btn btn-secondary"><a href="/order_requests_page">주문신청내역</a></button>
+      tempHtml = `<button type="button" class="btn btn-secondary"><a href="/order_requests_page">주문신청내역</a></button>
                   <button type="button" class="btn btn-secondary"><a href="/order_list_page">주문접수내역</a></button>
+                  <button type="button" class="btn btn-info"><a href="/profile_page">마이페이지</a></button>
                   <button type="button" class="btn btn-dark logout">로그아웃</button>`;
     } else {
       tempHtml = `<button type="button" class="btn btn-secondary"><a href="/order_create_page">주문신청</a></button>
@@ -22,6 +22,14 @@ const headBox = () => {
     }
     user.insertAdjacentHTML('beforeend', userHtml);
     buttons.insertAdjacentHTML('beforeend', tempHtml);
+
+    if (member === '1') {
+      const socket = io('http://127.0.0.1:3000');
+      socket.on('orderCreate', (data) => {
+        alert(data.message);
+        window.location.href = '/order_requests_page';
+      });
+    }
 
     const logoutBtns = document.getElementsByClassName('logout');
     for (const logoutBtn of logoutBtns) {
@@ -50,11 +58,8 @@ function convertCookieToObject(cookies) {
     const cookieItems = cookies.split(';');
 
     const obj = {};
-    // '='으로 분리
     const elem = cookieItems[0].split('=');
-    // 키 가져오기
     const key = elem[0].trim();
-    // 값 가져오기
     const val = decodeURIComponent(elem[1]).split(',');
 
     // 저장

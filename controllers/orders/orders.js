@@ -1,4 +1,5 @@
 const OrdersService = require('../../services/orders/orders');
+
 const io = require('../../socket');
 
 class OrdersController {
@@ -117,7 +118,6 @@ class OrdersController {
   createOrders = async (req, res, next) => {
     try {
       const { nickname, phone, address, image, requested } = req.body;
-      console.log(image);
       const userId = req.userInfo.userId;
 
       if (!nickname || !phone || !address || !image || !requested) {
@@ -139,9 +139,7 @@ class OrdersController {
         throw createOrderData;
       }
 
-      io.getIO().on('connection', (socket) => {
-        io.getIO().emit('createOrder', createOrderData);
-      });
+      io.getIO().emit('orderCreate', { message: '주문이 생성되었습니다.' });
 
       res.status(201).json({
         message: '주문 신청이 완료되었습니다.',

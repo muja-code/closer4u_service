@@ -2,49 +2,49 @@
   <main>
     <div>
       <h1>회원가입</h1>
-      <form action="/api/users" method="post">
+      <div class="group">
+        <label>멤버</label>
+        <select id="member" name="member">
+          <option value="0" selected>일반고객</option>
+          <option value="1">사업체</option>
+        </select>
+
         <div class="group">
-          <label>멤버</label>
-          <select id="member" name="member">
-            <option value="0" selected>일반고객</option>
-            <option value="1">사업체</option>
-          </select>
+          <label>아이디</label>
+          <input type="text" class="form-control" id="account_id" name="account_id"
+            placeholder="3~10자 사이로 숫자, 영어 소문자만" />
+        </div>
 
-          <div class="group">
-            <label>아이디</label>
-            <input type="text" class="form-control" id="account_id" name="account_id"
-              placeholder="3~10자 사이로 숫자, 영어 소문자만" />
-          </div>
+        <div class="group">
+          <label>비밀번호</label>
+          <input type="password" class="form-control" id="password" name="password"
+            placeholder="5~10자 사이로 숫자/영어 대소문자/특수문자를 각 1자 이상 포함" />
+        </div>
 
-          <div class="group">
-            <label>비밀번호</label>
-            <input type="password" class="form-control" id="password" name="password"
-              placeholder="5~10자 사이로 숫자/영어 대소문자/특수문자를 각 1자 이상 포함" />
-          </div>
+        <div class="group">
+          <label>비밀번호 확인</label>
+          <input type="password" class="form-control" id="check_password" name="check_password"
+            placeholder="위 비밀번호과 동일하게 작성" />
+        </div>
 
-          <div class="group">
-            <label>비밀번호 확인</label>
-            <input type="password" class="form-control" id="check_password" name="check_password"
-              placeholder="위 비밀번호과 동일하게 작성" />
-          </div>
+        <div class="group">
+          <label>닉네임</label>
+          <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임" />
+        </div>
 
-          <div class="group">
-            <label>닉네임</label>
-            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임" />
-          </div>
+        <div class="group">
+          <label>전화번호</label>
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="전화번호" />
+        </div>
 
-          <div class="group">
-            <label>전화번호</label>
-            <input type="text" class="form-control" id="phone" name="phone" placeholder="전화번호" />
-          </div>
-
-          <div class="group">
-            <label>배송지</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="배송지" />
-          </div>
-          <button type="submit" class="btn btn-primary mb-3 login">가입하기</button>
-      </form>
+        <div class="group">
+          <label>배송지</label>
+          <input type="text" class="form-control" id="address" name="address" placeholder="배송지" />
+        </div>
+        <button class="btn btn-primary mb-3 login" id="signup">가입하기</button>
+        </form>
   </main>
   </body>
+  <script src="/js/users/signup.js"></script>
 
   </html>
