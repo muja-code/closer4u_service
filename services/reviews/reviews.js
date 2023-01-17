@@ -1,5 +1,6 @@
 const ReviewsRepository = require('../../repositories/reviews/reviews.js');
 const { Review } = require('../../models');
+const logger = require('../../utills/winston');
 
 class ReviewsService {
   reviewsRepository = new ReviewsRepository(Review);
@@ -23,7 +24,7 @@ class ReviewsService {
         comment: createReviewData.comment,
       };
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };

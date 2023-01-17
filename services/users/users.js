@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const logger = require('../../utills/winston');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const { Op } = require('sequelize');
@@ -75,7 +76,7 @@ class UserService {
       );
       return user;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return {
         code: 400,
         errorMessage: '요청이 올바르지 않습니다. - service',
@@ -122,7 +123,7 @@ class UserService {
 
       return [accessToken, userInfo];
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };

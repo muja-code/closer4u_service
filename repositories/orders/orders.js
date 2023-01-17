@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const logger = require('../../utills/winston');
 
 class OrdersRepository {
   constructor(orderModel, reviewModel, userModel) {
@@ -24,7 +25,7 @@ class OrdersRepository {
       });
       return orders;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -51,10 +52,9 @@ class OrdersRepository {
         },
       });
 
-      console.log(orders);
       return orders;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -67,7 +67,7 @@ class OrdersRepository {
 
       return order;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -85,7 +85,7 @@ class OrdersRepository {
         { where: { id: userId } }
       );
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -94,7 +94,7 @@ class OrdersRepository {
     try {
       await this.orderModel.update({ status }, { where: { id: orderId } });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -111,8 +111,7 @@ class OrdersRepository {
       });
       return orders;
     } catch (error) {
-      // 추가로 쿠키에 로그인 정보 없을때 403
-      console.log('OrderRepositoryFindAllOrderError :', error);
+      logger.error(error.message);
       return 400;
     }
   };
@@ -135,7 +134,7 @@ class OrdersRepository {
 
       return createOrderData;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };

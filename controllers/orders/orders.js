@@ -1,4 +1,5 @@
 const OrdersService = require('../../services/orders/orders');
+const logger = require('../../utills/winston');
 
 const io = require('../../socket');
 
@@ -17,7 +18,7 @@ class OrdersController {
 
       res.status(200).json({ datas: orders, userInfo: { userId, member } });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
@@ -35,7 +36,7 @@ class OrdersController {
 
       res.status(200).json({ datas: orders });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
@@ -51,6 +52,7 @@ class OrdersController {
 
       res.status(200).json({ datas: orders });
     } catch (error) {
+      logger.error(error.message);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
@@ -71,7 +73,7 @@ class OrdersController {
 
       res.status(201).json({ message: '접수가 완료되었습니다.' });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       if (error.message === 'Order Error') {
         res.status(404).json({ errorMessage: '주문이 존재하지 않습니다.' });
       } else if (error.message === 'Status Error') {
@@ -101,7 +103,7 @@ class OrdersController {
 
       res.status(201).json({ message: '주문 상태가 변경되었습니다.' });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       if (error.message === 'Order Error') {
         res.status(404).json({ errorMessage: '주문이 존재하지 않습니다.' });
       } else if (error.message === 'Status Error') {
@@ -145,7 +147,7 @@ class OrdersController {
         message: '주문 신청이 완료되었습니다.',
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       res.status(400).json({ errorMessage: error.message });
     }
   };

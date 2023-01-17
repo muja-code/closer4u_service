@@ -1,3 +1,5 @@
+const logger = require('../../utills/winston');
+
 class ReviewsRepository {
   constructor(reviewsModel) {
     this.reviewsModel = reviewsModel;
@@ -17,7 +19,7 @@ class ReviewsRepository {
 
       return createRievewData;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };

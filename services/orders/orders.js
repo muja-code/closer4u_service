@@ -1,6 +1,7 @@
 const OrdersRepository = require('../../repositories/orders/orders');
 const { Order, Review, User } = require('../../models');
 const dateFormat = require('../../utills/date');
+const logger = require('../../utills/winston');
 
 class OrdersService {
   ordersRepository = new OrdersRepository(Order, Review, User);
@@ -19,7 +20,7 @@ class OrdersService {
 
       return orders;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -46,7 +47,7 @@ class OrdersService {
 
       return datas;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -71,7 +72,7 @@ class OrdersService {
       );
       return true;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -90,7 +91,7 @@ class OrdersService {
       await this.ordersRepository.changeStatus(orderId, order.status + 1);
       return true;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -126,7 +127,7 @@ class OrdersService {
         };
       });
     } catch (error) {
-      console.log('OrdersRepositoryFindAllOrderError :', error.message);
+      logger.error(error.message);
       return error;
     }
   };
@@ -153,7 +154,7 @@ class OrdersService {
         requested: createOrderData.requested,
       };
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };

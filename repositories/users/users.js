@@ -1,3 +1,5 @@
+const logger = require('../../utills/winston');
+
 class UserRepository {
   constructor(userModel) {
     this.userModel = userModel;
@@ -25,7 +27,7 @@ class UserRepository {
 
       return user;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -47,7 +49,7 @@ class UserRepository {
 
       return user;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };
@@ -60,7 +62,7 @@ class UserRepository {
 
       return user;
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       return error;
     }
   };

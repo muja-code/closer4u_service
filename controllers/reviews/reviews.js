@@ -1,4 +1,5 @@
 const ReviewsService = require('../../services/reviews/reviews');
+const logger = require('../../utills/winston');
 
 class ReviewsController {
   reviewsService = new ReviewsService();
@@ -28,7 +29,7 @@ class ReviewsController {
         message: '리뷰작성을 성공했습니다.',
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };

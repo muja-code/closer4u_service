@@ -1,4 +1,5 @@
 const UserService = require('../../services/users/users');
+const logger = require('../../utills/winston');
 require('dotenv').config();
 
 class UsersController {
@@ -32,7 +33,7 @@ class UsersController {
         .status(201)
         .json({ message: '회원가입에 성공하셨습니다.', data: user });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
@@ -48,6 +49,7 @@ class UsersController {
       }
       res.status(200).json({ data: user });
     } catch (error) {
+      logger.error(error.message);
       res.status(400).json({ errorMessage: '요청이 올바르지 않습니다.' });
     }
   };
@@ -85,7 +87,7 @@ class UsersController {
       res.cookie('accessToken', accessToken);
       res.status(200).json({ message: '로그인 성공' });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message);
       if (error.message === 'Login Error') {
         return res
           .status(400)
