@@ -2,6 +2,7 @@ const OrdersService = require('../../services/orders/orders');
 const logger = require('../../utills/winston');
 
 const io = require('../../socket');
+const socket = require('../../socket');
 
 class OrdersController {
   ordersService = new OrdersService();
@@ -47,6 +48,10 @@ class OrdersController {
       const orders = await this.ordersService.getCompanyOrders(userId);
 
       if (typeof orders.message !== 'undefined') {
+        throw orders;
+      }
+
+      if ('message' in orders) {
         throw orders;
       }
 

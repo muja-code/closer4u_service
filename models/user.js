@@ -1,22 +1,28 @@
 'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+const { Model } = require('DataTypes');
+module.exports = (DataTypes, DataTypess) => {
   class User extends Model {
     /**
      * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
+     * This method is not a part of DataTypes lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Order, { foreignKey: 'user_id' });
-      User.hasMany(models.Review, { foreignKey: 'order_id' });
+      User.hasMany(models.Order, { foreignKey: 'userId' });
+      User.hasMany(models.Review, { foreignKey: 'orderId' });
     }
   }
   User.init(
     {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       account_id: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING,
         unique: true,
         allowNull: false,
       },
@@ -25,12 +31,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       nickname: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING,
         unique: true,
         allowNull: false,
       },
       phone: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       address: {
@@ -43,6 +49,14 @@ module.exports = (sequelize, DataTypes) => {
       member: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
       },
     },
     {
